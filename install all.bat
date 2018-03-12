@@ -1,30 +1,23 @@
-@echo off
-
-set VER=0.4.1
-set FINTIME=XX:XXAM
-set FINDATE=28/02/2018
-set TIMEZONE=AEST
-
 rem This was made by Main Fighter (mainfighter.com) to install all Visual C++ Redistrubutables.
 rem The installation files must be in the same directory as the batch file and named as seen below.
 
-rem Changelog
-rem + Patched elevate privileges
-rem - Will now mount share as soon as the script is launched
-
-rem Mounts drive
+@echo off
 pushd %~dp0
+
+rem Information
+set VER=0.4.2 Final
+set FINTIME=10:08PM
+set FINDATE=02/03/2018
+set TIMEZONE=AEST
 
 :CheckAdminRights
 rem Sets UAC to place that the scripts gets put temp
 set UAC="%temp%\mf_getadmin.vbs"
 rem Create script to get admin rights
 fltmc >nul 2>&1 || (title Requesting Admin Privileges & (echo Set UAC=CreateObject^("Shell.Application"^):UAC.ShellExecute "%~f0","","","runas",1)>%UAC% & %UAC% & del /f /q %UAC% & exit)
+pushd %~dp0
 
 title Install Visual C++ Redistributables
-
-rem Mounts drive
-pushd %~dp0
 
 color 0A
 echo Made by Main Fighter [mainfighter.com]
@@ -117,9 +110,6 @@ echo Installing 2017 x64
 echo Complete
 echo.
 
-rem This will remove any mounted drives used
-popd
-
 timeout /t 1 /nobreak>nul
 
 cls
@@ -127,4 +117,6 @@ echo Made by Main Fighter [mainfighter.com]
 echo Version %VER% (%FINDATE%)
 echo.
 echo Selected Visual C++ Redistrubutables should now be installed :)
+popd
 timeout /t 3 /nobreak>nul
+exit
