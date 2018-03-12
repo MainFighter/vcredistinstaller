@@ -1,56 +1,50 @@
-# In the works
-- No more development, moved onto rewritten version 1.x.x
+# v1.0.0rc1 (03/03/2018)
++ Cleaned up and fixed spelling errors
++ Added more comments on what some of the stuff does
++ Changed the way debug and disabling parts works
++ Added test for 2005 install in debug
++ Revamped debug screen
++ Added projectname and detailedname as variables
+- The comments might be moved to a readme later instead
+- Basically done, just doing cleanup and bug testing
+- Tested on Windows 7 x64 and Windows 10 x64 Insider build 17110 both on share and local drive
+- Haven't tetsing on actual x86 system yet
 
-# v0.4.2 Final (02/03/2018)
-+ Cleaned up some of the code
-- Moved entire changelog to changelog.txt
+## v1.0.0beta2
++ Readded ability to not install 2005
++ Cleaned up script and echos
++ Added ability to remove downloaded files on end of script
++ Added ability to disable downloading vcredist files
++ Added ability to disable version check
++ Added more customisation
++ Fixed the removing of administrator evelate script
++ Added local and remote versions to check version screen
 
-## v0.4.1 (28/02/2018)
-+ Patched elevate privileges
-- Will now mount share as soon as the script is launched
+## v1.0.0beta1
++ Tested and fixed any issues with running on share
++ Added farewell screen
++ Disabled debug, was left on in alpha2
++ Downloader debug was using off instead of false
 
-## v0.4.0 (26/02/2018)
-+ Script gets admin privileges
-+ Added title
-+ Using vars for versions and dates in script
-- Cleaned up code and comments
-- Removed references to UAC popup because script should now start with administrator
-- Removed troll at bottom
-- Moved change log to changelog.txt, now only has a change log for current version in actual script
+## v1.0.0alpha2 (02/03/2018)
++ Now only downloads the VC++ Redists that are needed for the architecture
++ Added some customisation
++ Moved the header and welcome screen to bottom of script and are now called from there
++ Added debug mode, mostly only for personal testing
++ Added title can be changed at top of script
++ Moved getting admin rights to top fo script
++ Cleaned up some stuff
+- Still not tested on share
+- Still can't select to not install VC 2005
+- Version check not implemented yet
 
-## v0.3.3 (18/08/2017)
-- Change mount location to be after first screen
-
-## v0.3.2 (17/08/2017)
-+ Corrected ask
-- Spelling mistake
-
-## v0.3.1 (03/04/2017)
-+ Patched demounting shared folder
-
-## v0.3 (03/04/2017)
-+ Will work off shared folders now
-- Merged _shares and _local because the share code works both on a share and local drive
-
-## v0.2.3_shares (03/04/2017)
-+ Added the ability to use from a network share by temporarily mounting the drive
-
-## v0.2.3 (03/04/2017)
-- Remove pointless delays
-
-## v0.2.2 (03/04/2017)
-+ Fixed typos
-- Removed left over pause in the middle of the script from debugging
-- Removed some other left over debugging shit
-
-## v0.2.1 (03/04/2017)
-+ Added the ability to run the batch file in Administrator mode to stop UAC prompts
-+ Fixed spelling mistakes and updated text at the end
-
-## v0.2 (unknown)
-+ Added 2017 x86 and x64
-+ Added the choice to install 2005 since it is no longer supported
-- Code is abit messy will be cleaned up later
-
-## v0.1 (31/03/2017)
-+ Inital Release
+## v1.0.0alpha1 (02/03/2018)
++ Completely rewritten
++ Detects system architecture (64bit or 32bit)
++ Downloads Visual C++ Redists from remote server using wget, can be changed to use your own server
++ Only trys to install the VC redist that works on the architecture
++ Includes wget for 32bit and 64bit and uses the one that is correct
+- Can no longer select not to install VC 2005 (going to be readded)
+- Not tested on share
+- Needs alot of testing and tweaking
+- Downloads a version.txt file from server but version check not yet implemented
