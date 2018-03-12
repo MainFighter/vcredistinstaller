@@ -1,5 +1,5 @@
-:: mainfighter.com
-:: Version 1.0.0beta2 (02/03/2018)
+:: Made by Main Fighter [mainfighter.com]
+:: Version 1.0.0beta3 (02/03/2018)
 
 @echo off
 pushd %~dp0
@@ -14,8 +14,8 @@ pushd %~dp0
 :: Information
 set author=Main Fighter
 set website=mainfighter.com
-set localversion=1.0.0beta2
-set releasetime=21:59
+set localversion=1.0.0beta3
+set releasetime=23:09
 set releasedate=02/03/2018
 set timezone=AEST
 
@@ -24,7 +24,7 @@ set cmdtitle=%website% - Download and Installer for Visual C++ Redistributables 
 set cmdcolor=0A
 
 :: Debug mode, basically should always be false unless you are using it
-set debug=true
+set debug=false
 
 :: Keep chace, if set to false it will remove the downloaded VC++ Redistributable files
 set keepcache=true
@@ -39,6 +39,7 @@ set versioncheck=true
 :: Remote URLs
 set versionurl=https://mainfighter.com/scripts/vcredistinstaller/remote/version.txt
 set vcredisturl=https://mainfighter.com/scripts/vcredistinstaller/remote/vcredist
+set vcredistinstallerurl=https://mainfighter.com/scripts/vcredistinstaller
 
 :: VC++ Redist versions
 set vcredistdir=vcredist
@@ -91,6 +92,23 @@ for /f "delims=" %%a in (%versionfile%) do set remoteversion=%%a
 :: Remove version.txt
 if exist %versionfile% del /f /q %versionfile% >nul 2>&1
 
+if /i %localversion%==%remoteversion% (
+    goto :noupdate
+) else (
+    cls
+    call :Header
+    color CF
+    echo Version out of date
+    echo Local Version: %localversion%
+    echo Remote Version: %remoteversion%
+    echo Download at %vcredistinstallerurl%
+    echo.
+    pause
+    cls
+    goto :ChooseVersions
+)
+
+:noupdate
 echo Local Version: %localversion%
 echo Remote Version: %remoteversion%
 timeout /t 3 /nobreak >nul
@@ -133,7 +151,7 @@ if %vcredistdownload%==true (
         if %arch%==64 (
             if %install05%==true (
                 %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist05_32% >nul 2>&1
-                %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir%%vcredist05_64% %vcredisturl%/%vcredist05_64% >nul 2>&1
+                %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist05_64% >nul 2>&1
             )
             %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist08_32% >nul 2>&1
             %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist08_64% >nul 2>&1
