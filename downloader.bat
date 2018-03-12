@@ -1,5 +1,5 @@
 :: mainfighter.com
-:: Version 1.0.0alpha2 (02/03/2018)
+:: Version 1.0.0beta1 (02/03/2018)
 
 @echo off
 pushd %~dp0
@@ -8,14 +8,15 @@ pushd %~dp0
 :: Sets UAC to place that the scripts gets put temp
 set UAC="%temp%\mfvcinstall_getadmin.vbs"
 :: Create script to get admin rights
-fltmc >nul 2>&1 || (title Requesting Admin Privileges & (echo Set UAC=CreateObject^("Shell.Application"^):UAC.ShellExecute "%~f0","","","runas",1)>%UAC% & %UAC% & del /f /q %UAC% & exit)
+fltmc >nul 2>&1 || (title Requesting Admin Privileges & (echo Set UAC=CreateObject^("Shell.Application"^):UAC.ShellExecute "%~f0","","","runas",1)>%UAC% & %UAC% & exit)
+pushd %~dp0
 
 :: Debug mode, basically should always be false unless you are using it
-set debug=true
+set debug=false
 
 :: Information
-set localversion=1.0.0alpha2
-set releasetime=XX:XX
+set localversion=1.0.0beta1
+set releasetime=19:19
 set releasedate=02/03/2018
 set timezone=AEST
 
@@ -48,8 +49,6 @@ set vcredist15_64=vcredist_2015_win64.exe
 set vcredist17_32=vcredist_2017_win32.exe
 set vcredist17_64=vcredist_2017_win64.exe
 
-pushd %~dp0
-
 :CheckArchitecture
 :: Check architecture in registry
 reg query "HKLM\System\CurrentControlSet\Control\Session Manager\Environment" /v "PROCESSOR_ARCHITECTURE" | find /i "AMD64" >nul && set arch=64 || set arch=32
@@ -79,7 +78,7 @@ if not exist vcredist mkdir vcredist
 ::%wget% -r --no-check-certificate -np -nd -N -R "index.html*" -P %vcredistdir% %vcredisturl% >nul 2>&1
 
 :: Downloader for 64 bit system
-if %debug%==off (
+if %debug%==false (
     if %arch%==64 (
         %wget% --no-check-certificate -N -O %vcredistdir%\%vcredist05_32% %vcredisturl%/%vcredist05_32% >nul 2>&1
         %wget% --no-check-certificate -N -O %vcredistdir%\%vcredist05_64% %vcredisturl%/%vcredist05_64% >nul 2>&1
@@ -216,3 +215,16 @@ goto :eof
 
 :Footer
 goto :eof
+
+:FarewellScreen
+echo Made by Main Fighter [mainfighter.com]
+echo Version %localversion% (%releasedate%)
+echo.
+echo Selected Visual C++ Redistrubutables should now be installed :)
+goto :eof
+
+cls
+call :FarewellScreen
+popd
+timeout /t 3 /nobreak>nul
+exit
