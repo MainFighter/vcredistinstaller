@@ -2,17 +2,18 @@
 
 rem This was made by Main Fighter (mainfighter.com) to install all Visual C++ Redistrubutables.
 rem The installation files must be in the same directory as the batch file and named as seen below.
-rem Version v0.2.3_shares (Comleted 8:17AM 03/04/2017)
+rem Version v0.3 (Comleted 8:39AM 03/04/2017)
 
 rem Changelog
 rem In the works
 rem + Adding the choice to install or not install certain versions
 rem + Making it so the script automatically elevates its permissions with a single UAC prompt at the beginning
-rem + Cleaning up the messy coder
+rem + Cleaning up the messy code
+rem v0.3
+rem + Will work off shared folders now
+rem - Merged _shares and _local because the share code works both on a share and local drive
 rem v0.2.3_shares
 rem + Added the ability to use from a network share by temporarily mounting the drive
-rem v0.2.3_local
-rem - Same as before just without share functionality
 rem v0.2.3
 rem - Remove pointless delays
 rem v0.2.2
@@ -38,7 +39,7 @@ echo Made by Main Fighter [mainfighter.com]
 echo.
 echo This will install the selected Visual C++ Redistributables silently in the background (UAC prompts will still appear)
 echo You can stop the UAC prompts by running the .bat file in Administrator mode
-echo Version 0.2.3_shares (03/04/2017)
+echo Version 0.3 (03/04/2017)
 echo.
 pause
 
