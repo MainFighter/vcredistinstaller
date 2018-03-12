@@ -2,12 +2,16 @@
 
 rem This was made by Main Fighter (mainfighter.com) to install all Visual C++ Redistrubutables.
 rem The files must be in the same directory as the batch file and named as seen below.
-rem v0.2
+rem Version v0.2.1 (Comleted 8:24PM 03/04/2017)
 
 rem Changelog
-rem v0.3 (Coming Soon)
-rem + Added the choice to install or not install certain versions
-rem - Cleaned up the code
+rem In the works
+rem + Adding the choice to install or not install certain versions
+rem + Making it so the script automatically elevates its permissions with a single UAC prompt at the beginning
+rem + Cleaning up the messy code
+rem v0.2.1
+rem + Added the ability to run the batch file in Administrator mode to stop UAC prompts
+rem + Fixed spelling mistakes and updated text at the end
 rem v0.2 
 rem + Added 2017 x86 and x64
 rem + Added the choice to install 2005 since it is no longer supported
@@ -15,11 +19,13 @@ rem - Code is abit messy will be cleaned up later
 rem v0.1
 rem + Inital Release
 
+cd %~dp0
 color 0A
 echo Made by Main Fighter [mainfighter.com]
 echo.
 echo This will install the selected Visual C++ Redistributables silently in the background (UAC prompts will still appear)
-echo Version 0.2 (02/04/2017)
+echo You can stop the UAC prompts by running the .bat file in Administrator mode
+echo Version 0.2.1 (02/04/2017)
 echo.
 pause
 
@@ -28,7 +34,7 @@ cls
 color 0A
 echo Made by Main Fighter [mainfighter.com]
 echo.
-echo Visual C++ 2005 is no longer offically supported by Microsoft.
+echo Visual C++ 2005 is no longer offically supported by Microsoft as of April 12th 2016.
 echo Do you want to install it? (y/n)
 set INPUT=
 set /P INPUT=Type input: %=%
@@ -43,6 +49,7 @@ goto Ask
 
 :yes
 color 0A
+[DEBUG] YES
 cls
 echo Made by Main Fighter [mainfighter.com]
 echo.
@@ -59,6 +66,7 @@ ping 0.0.0.0 -n 1 -w 250>nul
 echo.
 goto cont
 :no
+[DEBUG] NO
 color 0A
 cls
 echo Made by Main Fighter [mainfighter.com]
@@ -145,5 +153,5 @@ color 0A
 cls
 echo Made by Main Fighter [mainfighter.com]
 echo.
-echo Visual C++ Redistrubutables 2005 - 2015 should now be installed.
+echo Selected Visual C++ Redistrubutables should now be installed :)
 timeout /t 3 /nobreak>nul
