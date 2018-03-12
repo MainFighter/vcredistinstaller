@@ -2,13 +2,15 @@
 
 rem This was made by Main Fighter (mainfighter.com) to install all Visual C++ Redistrubutables.
 rem The installation files must be in the same directory as the batch file and named as seen below.
-rem Version v0.2.2 (Comleted 8:37PM 03/04/2017)
+rem Version v0.2.3 (Comleted 8:43PM 03/04/2017)
 
 rem Changelog
 rem In the works
 rem + Adding the choice to install or not install certain versions
 rem + Making it so the script automatically elevates its permissions with a single UAC prompt at the beginning
 rem + Cleaning up the messy coder
+rem v0.2.3
+rem - Remove pointless delays
 rem v0.2.2
 rem + Fixed typos
 rem - Removed left over pause in the middle of the script from debugging
@@ -29,7 +31,7 @@ echo Made by Main Fighter [mainfighter.com]
 echo.
 echo This will install the selected Visual C++ Redistributables silently in the background (UAC prompts will still appear)
 echo You can stop the UAC prompts by running the .bat file in Administrator mode
-echo Version 0.2.2 (02/04/2017)
+echo Version 0.2.3 (02/04/2017)
 echo.
 pause
 
@@ -59,13 +61,10 @@ echo.
 echo UAC prompt might open minimized
 echo.
 echo Installing 2005 SP1 x86
-ping 0.0.0.0 -n 1 -w 250>nul
 "2005 SP1 x86.exe" /q:a /c:"VCREDI~3.EXE /q:a /c:""msiexec /i vcredist.msi /qn"" "
 echo Installing 2005 SP1 x64
-ping 0.0.0.0 -n 1 -w 250>nul
 "2005 SP1 x64.exe" /q:a /c:"VCREDI~2.EXE /q:a /c:""msiexec /i vcredist.msi /qn"" "
 echo Complete
-ping 0.0.0.0 -n 1 -w 250>nul
 echo.
 goto cont
 :no
@@ -79,64 +78,48 @@ goto cont
 :cont
 
 echo Installing 2008 SP1 x86
-ping 0.0.0.0 -n 1 -w 250>nul
 "2008 SP1 x86.exe" /q
 echo Installing 2008 SP1 x64
-ping 0.0.0.0 -n 1 -w 250>nul
 "2008 SP1 x64.exe" /q
 echo Complete
-ping 0.0.0.0 -n 1 -w 250>nul
 echo.
 
 echo Installing 2010 SP1 x86
-ping 0.0.0.0 -n 1 -w 250>nul
 "2010 SP1 x86.exe" /q /norestart
 echo Installing 2010 SP1 x64
-ping 0.0.0.0 -n 1 -w 250>nul
 "2010 SP1 x64.exe" /q /norestart
 echo Complete
-ping 0.0.0.0 -n 1 -w 250>nul
 echo.
 
 echo Installing 2012 Update 4 x86
-ping 0.0.0.0 -n 1 -w 250>nul
 "2012 Update 4 x86.exe" /q /norestart
 echo Installing 2012 Update 4 x64
-ping 0.0.0.0 -n 1 -w 250>nul
 "2012 Update 4 x64.exe" /q /norestart
 echo Complete
-ping 0.0.0.0 -n 1 -w 250>nul
 echo.
 
 echo Installing 2013 x86
-ping 0.0.0.0 -n 1 -w 250>nul
 "2013 x86.exe" /install /quiet /norestart
 echo Installing 2013 x64
-ping 0.0.0.0 -n 1 -w 250>nul
 "2013 x64.exe" /install /quiet /norestart
 echo Complete
-ping 0.0.0.0 -n 1 -w 250>nul
 echo.
 
 echo Installing 2015 Update 3 x86
-ping 0.0.0.0 -n 1 -w 250>nul
 "2015 Update 3 x86.exe" /install /quiet /norestart
 echo Installing 2015 Update 3 x64
-ping 0.0.0.0 -n 1 -w 250>nul
 "2015 Update 3 x64.exe" /install /quiet /norestart
 echo Complete
-ping 0.0.0.0 -n 1 -w 250>nul
 echo.
 
 echo Installing 2017 x86
-ping 0.0.0.0 -n 1 -w 250>nul
 "2017 x86.exe" /install /quiet /norestart
 echo Installing 2017 x64
-ping 0.0.0.0 -n 1 -w 250>nul
 "2017 x64.exe" /install /quiet /norestart
 echo Complete
-ping 0.0.0.0 -n 1 -w 250>nul
 echo.
+
+timeout /t 1 /nobreak>nul
 
 cls
 color 0C
