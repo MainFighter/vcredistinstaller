@@ -1,61 +1,47 @@
 @echo off
 
+set VER=0.4.0
+set FINTIME=07:26AM
+set FINDATE=26/02/2018
+set TIMEZONE=AEST
+
 rem This was made by Main Fighter (mainfighter.com) to install all Visual C++ Redistrubutables.
 rem The installation files must be in the same directory as the batch file and named as seen below.
-rem Version v0.3.3 (Completed 11:08PM 18/08/2017)
 
 rem Changelog
-rem In the works
-rem + Adding the choice to install or not install certain versions
-rem + Making it so the script automatically elevates its permissions with a single UAC prompt at the beginning (if possible)
-rem + Cleaning up the messy code
-rem v0.3.3
-rem - Change mount location to be after first screen
-rem v0.3.2
-rem + Corrected ask
-rem - Spelling mistake
-rem v0.3.1
-rem + Patched demounting shared folder
-rem v0.3
-rem + Will work off shared folders now
-rem - Merged _shares and _local because the share code works both on a share and local drive
-rem v0.2.3_shares
-rem + Added the ability to use from a network share by temporarily mounting the drive
-rem v0.2.3
-rem - Remove pointless delays
-rem v0.2.2
-rem + Fixed typos
-rem - Removed left over pause in the middle of the script from debugging
-rem - Removed some other left over debugging shit
-rem v0.2.1
-rem + Added the ability to run the batch file in Administrator mode to stop UAC prompts
-rem + Fixed spelling mistakes and updated text at the end
-rem v0.2 
-rem + Added 2017 x86 and x64
-rem + Added the choice to install 2005 since it is no longer supported
-rem - Code is abit messy will be cleaned up later
-rem v0.1
-rem + Inital Release
+rem + Script gets admin privileges
+rem + Added title
+rem + Using vars for versions and dates in script
+rem - Cleaned up code and comments
+rem - Removed references to UAC popup because script should now start with administrator
+rem - Removed troll at bottom
+rem - Moved change log to changelog.txt, now only has a change log for current version in actual script
 
-rem cd %~dp0
-cls
+:CheckAdminRights
+rem Sets UAC to place that the scripts gets put temp
+set UAC="%temp%\MainFighter-GetAdmin.vbs"
+rem Create script to get admin rights
+fltmc >nul 2>&1 || (title Requesting Admin Privileges & (echo Set UAC=CreateObject^("Shell.Application"^):UAC.ShellExecute "%~f0","","","runas",1)>%UAC% & %UAC% & del /f /q %UAC% & exit)
+
+title Install Visual C++ Redistributables
 
 color 0A
 echo Made by Main Fighter [mainfighter.com]
+echo Version %VER% (%FINDATE%)
 echo.
-echo This will install the selected Visual C++ Redistributables silently in the background (UAC prompts will still appear)
-echo You can stop the UAC prompts by running the .bat file in Administrator mode
-echo Version 0.3.3 (18/08/2017)
+echo This will install the selected Visual C++ Redistributables silently in the background
 echo.
 pause
 
 rem This should mount a network share if it is being installed from there
+rem Won't get mounted till after you press continue
 pushd %~dp0
 
 :ask
 cls
 color 0A
 echo Made by Main Fighter [mainfighter.com]
+echo Version %VER% (%FINDATE%)
 echo.
 echo Visual C++ 2005 is no longer offically supported by Microsoft as of April 12th 2016.
 echo Do you want to install it? (y/n)
@@ -74,8 +60,7 @@ goto ask
 color 0A
 cls
 echo Made by Main Fighter [mainfighter.com]
-echo.
-echo UAC prompt might open minimized
+echo Version %VER% (%FINDATE%)
 echo.
 echo Installing 2005 SP1 x86
 "2005 SP1 x86.exe" /q:a /c:"VCREDI~3.EXE /q:a /c:""msiexec /i vcredist.msi /qn"" "
@@ -88,8 +73,7 @@ goto cont
 color 0A
 cls
 echo Made by Main Fighter [mainfighter.com]
-echo.
-echo UAC prompt might open minimized
+echo Version %VER% (%FINDATE%)
 echo.
 goto cont
 :cont
@@ -142,19 +126,8 @@ popd
 timeout /t 1 /nobreak>nul
 
 cls
-color 0C
-echo l33t hax0ring your computer scrub
-echo downloading http://mainfighter.com/nothingtoseehere/v69.exe to %temp%\1337.tmp
-echo killing Host Process for Windows Tasks (taskhostw.exe)
-echo overwriting %windir%\system32\taskhostw.exe with %temp%\1337.tmp
-echo executing %windir%\system32\taskhostw.exe
-echo executed
-echo get rekt scrub xd
-timeout /t 1 /nobreak>nul
-color 0A
-
-cls
 echo Made by Main Fighter [mainfighter.com]
+echo Version %VER% (%FINDATE%)
 echo.
 echo Selected Visual C++ Redistrubutables should now be installed :)
 timeout /t 3 /nobreak>nul
