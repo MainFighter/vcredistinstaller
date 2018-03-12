@@ -1,14 +1,18 @@
 @echo off
 
 rem This was made by Main Fighter (mainfighter.com) to install all Visual C++ Redistrubutables.
-rem The files must be in the same directory as the batch file and named as seen below.
-rem Version v0.2.1 (Comleted 8:24PM 03/04/2017)
+rem The installation files must be in the same directory as the batch file and named as seen below.
+rem Version v0.2.2 (Comleted 8:37PM 03/04/2017)
 
 rem Changelog
 rem In the works
 rem + Adding the choice to install or not install certain versions
 rem + Making it so the script automatically elevates its permissions with a single UAC prompt at the beginning
-rem + Cleaning up the messy code
+rem + Cleaning up the messy coder
+rem v0.2.2
+rem + Fixed typos
+rem - Removed left over pause in the middle of the script from debugging
+rem - Removed some other left over debugging shit
 rem v0.2.1
 rem + Added the ability to run the batch file in Administrator mode to stop UAC prompts
 rem + Fixed spelling mistakes and updated text at the end
@@ -25,7 +29,7 @@ echo Made by Main Fighter [mainfighter.com]
 echo.
 echo This will install the selected Visual C++ Redistributables silently in the background (UAC prompts will still appear)
 echo You can stop the UAC prompts by running the .bat file in Administrator mode
-echo Version 0.2.1 (02/04/2017)
+echo Version 0.2.2 (02/04/2017)
 echo.
 pause
 
@@ -49,7 +53,6 @@ goto Ask
 
 :yes
 color 0A
-[DEBUG] YES
 cls
 echo Made by Main Fighter [mainfighter.com]
 echo.
@@ -66,7 +69,6 @@ ping 0.0.0.0 -n 1 -w 250>nul
 echo.
 goto cont
 :no
-[DEBUG] NO
 color 0A
 cls
 echo Made by Main Fighter [mainfighter.com]
@@ -135,8 +137,6 @@ ping 0.0.0.0 -n 1 -w 250>nul
 echo Complete
 ping 0.0.0.0 -n 1 -w 250>nul
 echo.
-
-pause
 
 cls
 color 0C
