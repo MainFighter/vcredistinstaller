@@ -2,14 +2,14 @@
 :: Visual C++ Redistrubutable Download and Installer script
 
 @echo off
+cls
 pushd %~dp0
 
 :CheckAdminRights
 :: Sets UAC to place that the scripts gets put temp
 set uac=%temp%\mfvcinstall_getadmin.vbs
 :: Create script to get admin rights
-fltmc >nul 2>&1 || (title Requesting Admin Privileges & (echo Set UAC=CreateObject^("Shell.Application"^):UAC.ShellExecute "%~f0","","","runas",1)>%uac% & %uac% & if exist %uac% del /f /q %uac% & exit)
-pushd %~dp0
+fltmc >nul 2>&1 || (title Requesting Admin Privileges & (echo Set UAC=CreateObject^("Shell.Application"^):UAC.ShellExecute "%~f0","","","runas",1)>%uac% & %uac% & if exist %uac% del /f /q %uac% & popd & exit)
 
 :: Project Information
 :: Author
@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.2.2
+set localversion=1.2.3
 :: Release Date
-set releasedate=04/03/2018
+set releasedate=03/03/2018
 :: Release Time
-set releasetime=00:45
+set releasetime=2:51
 :: Author's timezone
 set timezone=AEST
 
@@ -187,10 +187,11 @@ call :NewVersionScreen
 %wget% --no-check-certificate --timestamping --directory-prefix=%bindir% %archiverurl% >nul 2>&1
 :: Grabs the latest version from the server
 %wget% --no-check-certificate --output-document=v%remoteversion%.7z %updateurl% >nul 2>&1
-:: Starts the new version
-start %projectname%.bat
-:: Extracts the latest version and exits
-%archiver% x -y v%remoteversion%.7z >nul 2>&1 & if exist v%remoteversion%.7z del /f /q v%remoteversion%.7z & exit
+:: Extracts the latest version and exit
+%archiver% x -y v%remoteversion%.7z >nul 2>&1 & if exist v%remoteversion%.7z del /f /q v%remoteversion%.7z & echo Script updated plesae relaunch & timeout /t 3 /nobreak >nul & exit
+:: Start updater script
+::set runupdaterscript=%temp%\mfvcinstall_updatelaunch.vbs
+::echo set up=createobject^("wscript.shell"^):up.run "%~d0\updater.bat")>%runupdaterscript% & %runupdaterscript% & if exist %runupdaterscript% del /f /q %runupdaterscript% & exit
 
 ::===============================================================================================================::
 
