@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.1.0
+set localversion=1.2.0
 :: Release Date
 set releasedate=03/03/2018
 :: Release Time
-set releasetime=18:10
+set releasetime=19:43
 :: Author's timezone
 set timezone=AEST
 
@@ -54,14 +54,20 @@ set debug=true
 
 :: Remote URLs
 :: You can change the URLs to your own if you like (just make sure you create the right files, you can look at the ones on my server if you are unsure)
-set scripturl=https://%website%/scripts/%projectname%/release
-set updateurl=https://%website%/scripts/%projectname%/release/latest.7z
-set versionurl=https://%website%/scripts/%projectname%/remote/version.txt
-set vcredisturl=https://%website%/scripts/%projectname%/remote/vcredist
+set scripturl=https://%website%/scripts/%projectname%
+set updateurl=%scripturl%/release
+set versionurl=%scripturl%/remote/version.txt
+set vcredisturl=%scripturl%/remote/vcredist
+set archiver64url=%scripturl%/remote/bin/7za_win64.exe
+set archiver32url=%scripturl%/remote/bin/7za_win32.exe
 
-:: Visual C++ Redistributable versions
+:: Bin Directory, this is where bineries that are need are stored (eg wget)
+set bindir=bin
+
 :: vcredistdir is the name of the folder the files are store in on the local machine
 set vcredistdir=vcredist
+
+:: Visual C++ Redistributable versions
 :: These only change what they are called on the server not what they are called on the local machine
 :: This was changed due to timestamping on files
 set vcredist05_32=vcredist_2005_win32.exe
@@ -78,6 +84,8 @@ set vcredist15_32=vcredist_2015_win32.exe
 set vcredist15_64=vcredist_2015_win64.exe
 set vcredist17_32=vcredist_2017_win32.exe
 set vcredist17_64=vcredist_2017_win64.exe
+
+::===============================================================================================================::
 
 :: Displays welcome screen
 :: The screens are being called from the bottom of the script
@@ -103,15 +111,15 @@ reg query "HKLM\System\CurrentControlSet\Control\Session Manager\Environment" /v
 
 :Wget
 :: Use wget win64 on 64bit system
-if %arch%==64 set wget=bin\wget_win64.exe
+if %arch%==64 set wget=%bindir%\wget_win64.exe
 :: Use wget win32 on 32bit system
-if %arch%==32 set wget=bin\wget_win32.exe
+if %arch%==32 set wget=%bindir%\wget_win32.exe
 
 :7z
 :: Use 7z win64 on 64bit system
-if %arch%==64 set archiver=bin\7za_win64.exe
+if %arch%==64 set archiverurl=%archiver64url% & set archiver=%bindir%\7za_win64.exe
 :: Use 7z win32 on 32bit system
-if %arch%==32 set archiver=bin\7za_win32.exe
+if %arch%==32 set archiverurl=%archiver32url% & set archiver=%bindir%\7za_win32.exe
 
 ::===============================================================================================================::
 
@@ -137,36 +145,7 @@ if exist %versionfile% del /f /q %versionfile% >nul 2>&1
 set "localversioncheck=%localversion:.=%"
 set "remoteversioncheck=%remoteversion:.=%"
 
-if /i %localversioncheck% leq %remoteversioncheck% ( goto :ChooseVersions ) else ( goto :AutoUpdate )
-
-:askupdate
-cls
-call :Header
-call :NewVersionScreen
-
-echo Do you want to exit and go download the new version? (y/n)
-set input=
-set /P input=Type input: %=%
-If /I %input%==y popd & exit
-If /I %input%==n cls & goto :ChooseVersions
-cls
-color CF
-echo.
-echo Incorrect input please try again
-timeout /t 3 /nobreak >nul
-cls
-goto askupdate
-
-:noupdate
-cls
-call :Header
-echo Your version is upto date!
-echo.
-echo Local Version: v%localversion%
-echo Remote Version: v%remoteversion%
-timeout /t 3 /nobreak >nul
-
-cls
+if /i %localversioncheck% leq %remoteversioncheck% ( cls & goto :ChooseVersions ) else ( set updateurl=%updateurl%/v%remoteversion%.7z & cls & goto :AutoUpdate )
 
 ::===============================================================================================================::
 
@@ -175,16 +154,15 @@ cls
 if %autoupdate%==true goto :updatefiles
 
 :askupdatefiles
-cls
 call :Header
 call :NewVersionScreen
 
 echo There is a newer version of the script
 echo Do you want to update to the latest version? (y/n)
 set input=
-set /P input=Type input: %=%
-If /I %input%==y goto :updatefiles
-If /I %input%==n cls & goto :ChooseVersions
+set /p input=Type input: %=%
+if /i %input%==y goto :updatefiles
+if /i %input%==n cls & goto :ChooseVersions
 cls
 color 0F
 echo.
@@ -194,11 +172,18 @@ cls
 goto askupdatefiles
 
 :updatefiles
-%wget% --no-check-certificate --output-document=%remoteversion%.7z %updateurl%
-%archiver% x -y %remoteversion%.7z
-%projectname%.bat
-exit
+cls
+call :Header
+call :NewVersionScreen
 
+:: Grabs 7z from server
+%wget% --no-check-certificate --timestamping --directory-prefix=%bindir% %archiverurl% >nul 2>&1
+:: Grabs the latest version from the server
+%wget% --no-check-certificate --output-document=v%remoteversion%.7z %updateurl% >nul 2>&1
+:: Starts the new version
+start %projectname%.bat
+:: Extracts the latest version and exits
+%archiver% x -y v%remoteversion%.7z >nul 2>&1 & del /f /q v%remoteversion%.7z & exit
 
 ::===============================================================================================================::
 
@@ -209,9 +194,9 @@ call :Header
 echo Visual C++ Redistributables 2005 are no longer offically supported by Microsoft as of April 12th 2016.
 echo Do you want to install it? (y/n)
 set input=
-set /P input=Type input: %=%
-If /I %input%==y set install05=true & cls & goto DownloadVCRedist
-If /I %input%==n set install05=false & cls & goto DownloadVCRedist
+set /p input=Type input: %=%
+If /i %input%==y set install05=true & cls & goto DownloadVCRedist
+If /i %input%==n set install05=false & cls & goto DownloadVCRedist
 cls
 color 0C
 echo.
@@ -470,6 +455,17 @@ goto :eof
 
 ::===============================================================================================================::
 
+:NewVersionScreen
+color CF
+echo LOCAL VERSION IS OUT OF DATE
+echo.
+echo Local Version: v%localversion%
+echo Remote Version: v%remoteversion%
+echo.
+goto :eof
+
+::===============================================================================================================::
+
 :DebugScreen
 title DEBUG ENABLED %projectname% v%localversion%
 color CF
@@ -498,20 +494,13 @@ echo scripturl=%scripturl%
 echo updateurl=%updateurl%
 echo versionurl=%versionurl%
 echo vcredisturl=%vcredisturl%
+echo archiver64url=%archiver64url%
+echo archiver32url=%archiver32url%
+echo archiverurl=%archiverurl%
 echo wget=%wget%
 echo archiver=%archiver%
 echo.
-goto :eof
-
-::===============================================================================================================::
-
-:NewVersionScreen
-color CF
-echo LOCAL VERSION IS OUT OF DATE
-echo.
-echo Local Version: v%localversion%
-echo Remote Version: v%remoteversion%
-echo.
-echo Download new version at %scripturl%
+echo bindir=%bindir%
+echo vcredistdir=%vcredistdir%
 echo.
 goto :eof
