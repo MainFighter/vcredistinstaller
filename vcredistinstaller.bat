@@ -8,7 +8,7 @@ pushd %~dp0
 :: Sets UAC to place that the scripts gets put temp
 set uac=%temp%\mfvcinstall_getadmin.vbs
 :: Create script to get admin rights
-fltmc >nul 2>&1 || (title Requesting Admin Privileges & (echo Set UAC=CreateObject^("Shell.Application"^):UAC.ShellExecute "%~f0","","","runas",1)>%uac% & %uac% & del /f /q %uac% & exit)
+fltmc >nul 2>&1 || (title Requesting Admin Privileges & (echo Set UAC=CreateObject^("Shell.Application"^):UAC.ShellExecute "%~f0","","","runas",1)>%uac% & %uac% & if exist %uac% del /f /q %uac% & exit)
 pushd %~dp0
 
 :: Project Information
@@ -21,19 +21,21 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.2.0
+set localversion=1.2.1
 :: Release Date
 set releasedate=03/03/2018
 :: Release Time
-set releasetime=19:43
+set releasetime=20:41
 :: Author's timezone
 set timezone=AEST
 
 :: Customize
 :: Changes command prompt window title (doesn't change it on every screen)
 set cmdtitle=%website% - %detailedprojectname% - v%localversion%
-:: Changes command prompt colors (doesn't change it on warning and debug screen)
+:: Changes primary command prompt colors
 set cmdcolor=0A
+:: Changes color on warning screen, used on new version and debug screen currently
+set cmdwcolor=CF
 
 :: Version Check, if set to false will disable version check
 set versioncheck=true
@@ -48,9 +50,6 @@ set vcredistdownload=true
 
 :: Keep cache, if set to false it will remove the downloaded Visual C++ Redistributable files on completion
 set keepcache=true
-
-:: Debug mode, basically should always be false unless you are using it
-set debug=true
 
 :: Remote URLs
 :: You can change the URLs to your own if you like (just make sure you create the right files, you can look at the ones on my server if you are unsure)
@@ -84,6 +83,9 @@ set vcredist15_32=vcredist_2015_win32.exe
 set vcredist15_64=vcredist_2015_win64.exe
 set vcredist17_32=vcredist_2017_win32.exe
 set vcredist17_64=vcredist_2017_win64.exe
+
+:: Debug mode, basically should always be false unless you are using it
+set debug=false
 
 ::===============================================================================================================::
 
@@ -183,7 +185,7 @@ call :NewVersionScreen
 :: Starts the new version
 start %projectname%.bat
 :: Extracts the latest version and exits
-%archiver% x -y v%remoteversion%.7z >nul 2>&1 & del /f /q v%remoteversion%.7z & exit
+%archiver% x -y v%remoteversion%.7z >nul 2>&1 & if exist v%remoteversion%.7z del /f /q v%remoteversion%.7z & exit
 
 ::===============================================================================================================::
 
@@ -363,31 +365,15 @@ cls
 
 ::===============================================================================================================::
 
-:RemoveCache
-
-if %keepcache%==true goto :Debug
-
-call :Header
-
-echo Removing downloaded Visual C++ Redistributable files
-rd /s /q %vcredistdir%
-timeout /t 3 /nobreak >nul
-
-cls
-
-::===============================================================================================================::
-
 :Debug
 
-if %debug%==false goto :Farewell
+if %debug%==false goto :RemoveCache
 
 call :DebugScreen
 pause
 
 cls
-color CF
-echo DEBUG MODE CURRENTLY ENABLED
-echo.
+call :DebugHeader
 echo Running simulated installations
 echo.
 
@@ -407,6 +393,38 @@ if %arch%==32 (
     echo Simulated Install Visual C++ Redistributable
     timeout /t 3 /nobreak >nul
 )
+
+cls
+
+::===============================================================================================================::
+
+:RemoveCache
+
+if %keepcache%==true goto :Farewell
+
+if %debug%==true (
+    call :DebugHeader
+    echo Running simulated removable of cache
+    echo.
+
+    echo Simulated removable of downloaded Visual C++ Redistributable files
+    timeout /t 3 /nobreak >nul
+
+    echo Simulated removable archiver executable
+    timeout /t 3 /nobreak >nul
+
+    cls & goto :Farewell
+)
+
+call :Header
+
+echo Removing downloaded Visual C++ Redistributable files
+if exist %vcredistdir% rd /s /q %vcredistdir%
+
+echo Removing archiver executable
+if exist %archiver% del /f /q %archiver%
+
+timeout /t 3 /nobreak >nul
 
 cls
 
@@ -456,7 +474,7 @@ goto :eof
 ::===============================================================================================================::
 
 :NewVersionScreen
-color CF
+color %cmdwcolor%
 echo LOCAL VERSION IS OUT OF DATE
 echo.
 echo Local Version: v%localversion%
@@ -466,9 +484,17 @@ goto :eof
 
 ::===============================================================================================================::
 
+:DebugHeader
+color %cmdwcolor%
+echo DEBUG MODE CURRENTLY ENABLED
+echo.
+goto :eof
+
+::===============================================================================================================::
+
 :DebugScreen
 title DEBUG ENABLED %projectname% v%localversion%
-color CF
+color %cmdwcolor%
 echo DEBUG MODE CURRENTLY ENABLED
 echo.
 echo author=%author%
