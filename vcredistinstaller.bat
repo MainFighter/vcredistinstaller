@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.0.0
+set localversion=1.0.1
 :: Release Date
 set releasedate=03/03/2018
 :: Release Time
-set releasetime=15:20
+set releasetime=15:31
 :: Author's timezone
 set timezone=AEST
 
@@ -51,7 +51,7 @@ set debug=false
 
 :: Remote URLs
 :: You can change the URLs to your own if you like (just make sure you create the right files, you can look at the ones on my server if you are unsure)
-set scripturl=https://%website%/scripts/%projectname%
+set scripturl=https://%website%/scripts/%projectname%/release
 set versionurl=https://%website%/scripts/%projectname%/remote/version.txt
 set vcredisturl=https://%website%/scripts/%projectname%/remote/vcredist
 
