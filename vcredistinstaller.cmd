@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.2.3
+set localversion=1.2.4
 :: Release Date
-set releasedate=03/03/2018
+set releasedate=05/03/2018
 :: Release Time
-set releasetime=2:51
+set releasetime=00:31
 :: Author's timezone
 set timezone=AEST
 
@@ -50,6 +50,10 @@ set vcredistdownload=true
 
 :: Keep cache, if set to false it will remove the downloaded Visual C++ Redistributable files on completion
 set keepcache=true
+
+:: Auto restart, will automatically restart system when installation is complete
+set disablerestart=false
+set autorestart=false
 
 :: Remote URLs
 :: You can change the URLs to your own if you like (just make sure you create the right files, you can look at the ones on my server if you are unsure)
@@ -457,9 +461,37 @@ cls
 
 :Farewell
 call :FarewellScreen
-popd
+
+if %disablerestart%==true timeout /t 3 /nobreak >nul & popd & exit
+if %autorestart%==true cls & goto :Restart
+
+echo Do you want to restart your system? (y/n)
+set input=
+set /p input=Type input: %=%
+If /i %input%==y cls & goto :Restart
+If /i %input%==n popd & exit
+cls
+color 0C
+echo.
+echo Incorrect input please try again
 timeout /t 3 /nobreak >nul
-exit
+cls 
+goto :Farewell
+
+cls
+
+::===============================================================================================================::
+
+:Restart
+call :FarewellScreen
+
+timeout /t 1 /nobreak >nul
+echo Your system will restart in 1...
+timeout /t 1 /nobreak >nul
+echo Your system will restart in 2...
+timeout /t 1 /nobreak >nul
+echo Your system will restart in 3...
+popd & shutdown.exe /r /f /t 00
 
 ::===============================================================================================================::
 
@@ -480,8 +512,6 @@ goto :eof
 ::===============================================================================================================::
 
 :WelcomeScreen
-title %cmdtitle%
-color %cmdcolor%
 call :Header
 echo This will install the selected Visual C++ Redistributables silently in the background
 echo.
@@ -490,10 +520,9 @@ goto :eof
 ::===============================================================================================================::
 
 :FarewellScreen
-title %cmdtitle%
-color %cmdcolor%
 call :Header
 echo Selected Visual C++ Redistributables should now be installed :)
+echo.
 goto :eof
 
 ::===============================================================================================================::
@@ -546,8 +575,10 @@ echo Windows Version: %osver%
 echo System Architecture: %arch%bit
 echo.
 echo versioncheck=%versioncheck%
+echo autoupdate=%autoupdate%
 echo vcredistdownload=%vcredistdownload%
 echo keepcache=%keepcache%
+echo autorestart=%autorestart%
 echo scripturl=%scripturl%
 echo updateurl=%updateurl%
 echo versionurl=%versionurl%
