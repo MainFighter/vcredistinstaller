@@ -9,7 +9,7 @@ pushd %~dp0
 :: Sets UAC to place that the scripts gets put temp
 set uac=%temp%\mfvcinstall_getadmin.vbs
 :: Create script to get admin rights
-fltmc >nul 2>&1 || (title Requesting Administrator Privileges & echo Requestion Administrator Privileges... & (echo Set UAC=CreateObject^("Shell.Application"^):UAC.ShellExecute "%~f0","","","runas",1)>%uac% & %uac% & if exist %uac% del /f /q %uac% & popd & exit)
+fltmc >nul 2>&1 || (title Requesting Administrator Privileges & color CF & echo Requesting Administrator Privileges... & (echo Set uac=CreateObject^("Shell.Application"^):uac.ShellExecute "%~f0","","","runas",1)>%uac% & %uac% & if exist %uac% del /f /q %uac% & popd & exit)
 
 :: Project Information
 :: Author
@@ -21,7 +21,7 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.2.6
+set localversion=1.2.7
 :: Release Date
 set releasedate=05/03/2018
 :: Release Time
@@ -93,15 +93,19 @@ set vcredist17_64=vcredist_2017_win64.exe
 :: Debug mode will show the debug screen
 :: Debug install will still download and install vcredist for real, won't work if test mode is enabled
 set testmode=false
-set debug=false
+set debug=true
 set debuginstall=false
 
 ::===============================================================================================================::
 
 :: Removing old .bat files because moved to .cmd
 :: This be removed in the future
+if exist dontremove.txt goto :WelcomeScreen
 if exist OPEN_cmd_FILE_NOT_bat_FILE.txt del /f /q OPEN_cmd_FILE_NOT_bat_FILE.txt & if exist %projectname%*.bat del /f /q %projectname%*.bat
 
+::===============================================================================================================::
+
+:WelcomeScreen
 :: Displays welcome screen
 :: The screens are being called from the bottom of the script
 call :WelcomeScreen
@@ -163,7 +167,8 @@ if exist %versionfile% del /f /q %versionfile% >nul 2>&1
 set "localversioncheck=%localversion:.=%"
 set "remoteversioncheck=%remoteversion:.=%"
 
-if /i %localversioncheck% geq %remoteversioncheck% ( cls & goto :ChooseVersions ) else ( set updateurl=%updateurl%/v%remoteversion%.7z & cls & goto :AutoUpdate )
+if /i %localversioncheck% gtr %remoteversioncheck% cls & title %cmdtitle% & call :PreReleaseScreen & pause & goto :ChooseVersions
+if /i %localversioncheck% lss %remoteversioncheck% ( set updateurl=%updateurl%/v%remoteversion%.7z & cls & goto :AutoUpdate ) else ( cls & goto :ChooseVersions )
 
 ::===============================================================================================================::
 
@@ -541,6 +546,19 @@ echo LOCAL VERSION IS OUT OF DATE
 echo.
 echo Local Version: v%localversion%
 echo Remote Version: v%remoteversion%
+echo.
+goto :eof
+
+::===============================================================================================================::
+
+:PreReleaseScreen
+color %cmdwcolor%
+echo YOU ARE USING A PRE-RELEASE VERSION OF THE SCRIPT
+echo.
+echo Stable Version: %remoteversion%
+echo Local Version: %localversion%
+echo.
+echo If you encounter any issues please inform %author% [%website%]
 echo.
 goto :eof
 
