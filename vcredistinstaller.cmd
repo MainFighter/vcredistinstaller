@@ -6,7 +6,7 @@ cls
 pushd %~dp0
 
 :CheckAdminRights
-:: Sets UAC to place that the scripts gets put temp
+:: Sets local for elevate script
 set uac=%temp%\mfvcinstall_getadmin.vbs
 :: Create script to get admin rights
 fltmc >nul 2>&1 || (title Requesting Administrator Privileges & color CF & echo Requesting Administrator Privileges... & (echo Set uac=CreateObject^("Shell.Application"^):uac.ShellExecute "%~f0","","","runas",1)>%uac% & %uac% & if exist %uac% del /f /q %uac% & popd & exit)
@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.2.8
+set localversion=1.2.9
 :: Release Date
-set releasedate=05/03/2018
+set releasedate=13/03/2018
 :: Release Time
-set releasetime=02:11
+set releasetime=13:40
 :: Author's timezone
 set timezone=AEST
 
@@ -118,10 +118,14 @@ cls
 :: Gets build number from ver
 for /f "tokens=4-5 delims=. " %%i in ('ver') do set winbuild=%%i.%%j
 :: Sets osver to correct Windows version
-if %winbuild%==10.0 set osver=Windows 10
-if %winbuild%==6.3 set osver=Windows 8.1
-if %winbuild%==6.2 set osver=Windows 8
-if %winbuild%==6.1 set osver=Windows 7
+if %winbuild%==10.0 set osver=win10
+if %winbuild%==6.3 set osver=win81
+if %winbuild%==6.2 set osver=win8
+if %winbuild%==6.1 set osver=win7
+if %winbuild%==6.0 set osver=winvista
+:: 5.2 is actually Windows XP Professional x64
+if %winbuild%==5.2 set osver=winxp
+if %winbuild%==5.1 set osver=winxp
 
 ::===============================================================================================================::
 
@@ -168,7 +172,7 @@ set "localversioncheck=%localversion:.=%"
 set "remoteversioncheck=%remoteversion:.=%"
 
 :: Checks if local version is great than remote version. If local is great than remote it calls the PreReleaseScreen, pauses and then continues
-if /i %localversioncheck% gtr %remoteversioncheck% cls & title %cmdtitle% & call :PreReleaseScreen & pause & goto :ChooseVersions
+if /i %localversioncheck% gtr %remoteversioncheck% cls & title %cmdtitle% & call :PreReleaseScreen & pause & cls & goto :ChooseVersions
 :: Determines if local is less than remote and either gotos auto update or continues
 if /i %localversioncheck% lss %remoteversioncheck% ( set updateurl=%updateurl%/v%remoteversion%.7z & cls & goto :AutoUpdate ) else ( cls & goto :ChooseVersions )
 
@@ -508,6 +512,9 @@ cls
 :Restart
 call :FarewellScreen
 
+:: Test restart
+if %testmode%==true ( if %osver%==winxp ( cls & call :TestHeader & echo Shutting down Windows XP & echo. & pause & popd & exit ) else ( cls & call :TestHeader & echo Shutting down Windows Vista and up & echo. & pause & popd & exit ) )
+
 timeout /t 1 /nobreak >nul
 echo Your system will restart in 3...
 timeout /t 1 /nobreak >nul
@@ -515,8 +522,9 @@ echo Your system will restart in 2...
 timeout /t 1 /nobreak >nul
 echo Your system will restart in 1...
 timeout /t 1 /nobreak >nul
+
 :: Restart the system after 02 seconds so it allows time for the script to popd and exit
-shutdown.exe /r /f /t 02 & popd & exit
+if %osver%==winxp (shutdown.exe -r -f -t 02 & popd & exit) else ( shutdown.exe /r /f /t 02 & popd & exit )
 
 ::===============================================================================================================::
 
@@ -584,6 +592,8 @@ color %cmdwcolor%
 echo %projectname% v%localversion%
 echo.
 echo TEST MODE CURRENTLY ENABLED
+echo.
+echo Windows Version: %osver%
 echo System Architecture: %arch%bit
 echo.
 goto :eof
@@ -596,6 +606,7 @@ color %cmdwcolor%
 echo DEBUG INFORMATION
 echo.
 echo Windows Version: %osver%
+echo Windows Build: %winbuild%
 echo System Architecture: %arch%bit
 echo.
 echo testmode=%testmode%

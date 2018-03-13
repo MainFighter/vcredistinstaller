@@ -7,6 +7,7 @@
 + WinXP support for restart (script still doesn't fully support windows xp and probably never will)
 + Added test mode for restart
 + Patched pre release version screen
++ Spelling mistakes
 
 ## v1.2.8
 + Changed how header is called on new version screen
