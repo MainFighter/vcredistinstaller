@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.0.1
+set localversion=1.1.0
 :: Release Date
 set releasedate=03/03/2018
 :: Release Time
-set releasetime=15:31
+set releasetime=18:10
 :: Author's timezone
 set timezone=AEST
 
@@ -38,6 +38,9 @@ set cmdcolor=0A
 :: Version Check, if set to false will disable version check
 set versioncheck=true
 
+:: Auto Update, will auto update the script without asking
+set autoupdate=false
+
 :: Visual C++ Redistributable Download, if set to false will disable the script from downloadng Visual C++ Redistributable files
 :: If you disable the auto download you will have to manually download and place the files in the correct folder
 :: You can change the name of the folder and files below or just rename the exes to the default folder and exe names
@@ -47,11 +50,12 @@ set vcredistdownload=true
 set keepcache=true
 
 :: Debug mode, basically should always be false unless you are using it
-set debug=false
+set debug=true
 
 :: Remote URLs
 :: You can change the URLs to your own if you like (just make sure you create the right files, you can look at the ones on my server if you are unsure)
 set scripturl=https://%website%/scripts/%projectname%/release
+set updateurl=https://%website%/scripts/%projectname%/release/latest.7z
 set versionurl=https://%website%/scripts/%projectname%/remote/version.txt
 set vcredisturl=https://%website%/scripts/%projectname%/remote/vcredist
 
@@ -103,6 +107,12 @@ if %arch%==64 set wget=bin\wget_win64.exe
 :: Use wget win32 on 32bit system
 if %arch%==32 set wget=bin\wget_win32.exe
 
+:7z
+:: Use 7z win64 on 64bit system
+if %arch%==64 set archiver=bin\7za_win64.exe
+:: Use 7z win32 on 32bit system
+if %arch%==32 set archiver=bin\7za_win32.exe
+
 ::===============================================================================================================::
 
 :CheckVersion
@@ -127,7 +137,7 @@ if exist %versionfile% del /f /q %versionfile% >nul 2>&1
 set "localversioncheck=%localversion:.=%"
 set "remoteversioncheck=%remoteversion:.=%"
 
-if /i %localversioncheck% leq %remoteversioncheck% goto :noupdate
+if /i %localversioncheck% leq %remoteversioncheck% ( goto :ChooseVersions ) else ( goto :AutoUpdate )
 
 :askupdate
 cls
@@ -157,6 +167,38 @@ echo Remote Version: v%remoteversion%
 timeout /t 3 /nobreak >nul
 
 cls
+
+::===============================================================================================================::
+
+:AutoUpdate
+
+if %autoupdate%==true goto :updatefiles
+
+:askupdatefiles
+cls
+call :Header
+call :NewVersionScreen
+
+echo There is a newer version of the script
+echo Do you want to update to the latest version? (y/n)
+set input=
+set /P input=Type input: %=%
+If /I %input%==y goto :updatefiles
+If /I %input%==n cls & goto :ChooseVersions
+cls
+color 0F
+echo.
+echo Incorrect input please try again
+timeout /t 3 /nobreak >nul
+cls
+goto askupdatefiles
+
+:updatefiles
+%wget% --no-check-certificate --output-document=%remoteversion%.7z %updateurl%
+%archiver% x -y %remoteversion%.7z
+%projectname%.bat
+exit
+
 
 ::===============================================================================================================::
 
@@ -453,9 +495,11 @@ echo vcredistdownload=%vcredistdownload%
 echo keepcache=%keepcache%
 echo debug=%debug%
 echo scripturl=%scripturl%
+echo updateurl=%updateurl%
 echo versionurl=%versionurl%
 echo vcredisturl=%vcredisturl%
 echo wget=%wget%
+echo archiver=%archiver%
 echo.
 goto :eof
 
