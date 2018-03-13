@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.2.4
+set localversion=1.2.5
 :: Release Date
 set releasedate=05/03/2018
 :: Release Time
-set releasetime=00:31
+set releasetime=00:50
 :: Author's timezone
 set timezone=AEST
 
@@ -93,7 +93,7 @@ set vcredist17_64=vcredist_2017_win64.exe
 :: Debug mode will show the debug screen
 :: Debug install will still download and install vcredist for real, won't work if test mode is enabled
 set testmode=false
-set debug=false
+set debug=true
 set debuginstall=false
 
 ::===============================================================================================================::
@@ -107,10 +107,13 @@ cls
 ::===============================================================================================================::
 
 :CheckWindowsVersion
-:: Will be impmented in future
-:: Currently only used for debug screen
-:: This doesn't actually work, will work on it later as it is not really important at all
-set osver=ver
+:: Gets build number from ver
+for /f "tokens=4-5 delims=. " %%i in ('ver') do set winbuild=%%i.%%j
+:: Sets osver to correct Windows version
+if %winbuild%==10.0 set osver=Windows 10
+if %winbuild%==6.3 set osver=Windows 8.1
+if %winbuild%==6.2 set osver=Windows 8
+if %winbuild%==6.1 set osver=Windows 7
 
 ::===============================================================================================================::
 
@@ -486,12 +489,13 @@ cls
 call :FarewellScreen
 
 timeout /t 1 /nobreak >nul
-echo Your system will restart in 1...
+echo Your system will restart in 3...
 timeout /t 1 /nobreak >nul
 echo Your system will restart in 2...
 timeout /t 1 /nobreak >nul
-echo Your system will restart in 3...
-popd & shutdown.exe /r /f /t 00
+echo Your system will restart in 1...
+timeout /t 1 /nobreak >nul
+shutdown.exe /r /f /t 02 & popd & exit
 
 ::===============================================================================================================::
 
@@ -555,6 +559,9 @@ title DEBUG INFORMATION %projectname% v%localversion%
 color %cmdwcolor%
 echo DEBUG INFORMATION
 echo.
+echo Windows Version: %osver%
+echo System Architecture: %arch%bit
+echo.
 echo testmode=%testmode%
 echo debug=%debug%
 echo debuginstall=%debuginstall%
@@ -571,14 +578,13 @@ echo releasedate=%releasedate%
 echo releasetime=%releasetime%
 echo timezone=%timezone%
 echo.
-echo Windows Version: %osver%
-echo System Architecture: %arch%bit
-echo.
 echo versioncheck=%versioncheck%
 echo autoupdate=%autoupdate%
 echo vcredistdownload=%vcredistdownload%
 echo keepcache=%keepcache%
+echo disablerestart=%autorestart%
 echo autorestart=%autorestart%
+echo.
 echo scripturl=%scripturl%
 echo updateurl=%updateurl%
 echo versionurl=%versionurl%
@@ -586,6 +592,7 @@ echo vcredisturl=%vcredisturl%
 echo archiver64url=%archiver64url%
 echo archiver32url=%archiver32url%
 echo archiverurl=%archiverurl%
+echo.
 echo wget=%wget%
 echo archiver=%archiver%
 echo.
