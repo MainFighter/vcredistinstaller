@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.2.7
+set localversion=1.2.8
 :: Release Date
 set releasedate=05/03/2018
 :: Release Time
-set releasetime=01:27
+set releasetime=02:11
 :: Author's timezone
 set timezone=AEST
 
@@ -93,7 +93,7 @@ set vcredist17_64=vcredist_2017_win64.exe
 :: Debug mode will show the debug screen
 :: Debug install will still download and install vcredist for real, won't work if test mode is enabled
 set testmode=false
-set debug=true
+set debug=false
 set debuginstall=false
 
 ::===============================================================================================================::
@@ -167,17 +167,20 @@ if exist %versionfile% del /f /q %versionfile% >nul 2>&1
 set "localversioncheck=%localversion:.=%"
 set "remoteversioncheck=%remoteversion:.=%"
 
+:: Checks if local version is great than remote version. If local is great than remote it calls the PreReleaseScreen, pauses and then continues
 if /i %localversioncheck% gtr %remoteversioncheck% cls & title %cmdtitle% & call :PreReleaseScreen & pause & goto :ChooseVersions
+:: Determines if local is less than remote and either gotos auto update or continues
 if /i %localversioncheck% lss %remoteversioncheck% ( set updateurl=%updateurl%/v%remoteversion%.7z & cls & goto :AutoUpdate ) else ( cls & goto :ChooseVersions )
 
 ::===============================================================================================================::
 
 :AutoUpdate
 
+:: If auto update is enabled don't ask about updating
 if %autoupdate%==true goto :updatefiles
 
 :askupdatefiles
-call :Header
+:: Calls NewVersionScreen from bottom of script
 call :NewVersionScreen
 
 echo There is a newer version of the script
@@ -196,7 +199,6 @@ goto askupdatefiles
 
 :updatefiles
 cls
-call :Header
 call :NewVersionScreen
 
 :: Grabs 7z from server
@@ -233,9 +235,12 @@ goto ask2005
 
 :DownloadVCRedist
 
+:: If debug is on goto debug screen
 if %debug%==true goto :Debug
+:: If test mode is on goto test mode
 if %testmode%==true goto :Test
 
+:: If vcredistdownload disabled skip to install
 if %vcredistdownload%==false goto :InstallVCRedist
 
 call :Header
@@ -385,18 +390,22 @@ if %arch%==32 (
     %vcredistdir%\%vcredist17_32% /install /quiet /norestart
 )
 
+:: Skips over debug and test mode
 cls & goto :RemoveCache
 
 ::===============================================================================================================::
 
 :Debug
 
+:: If debug is false goto test mode
 if %debug%==false goto :Test
+:: If testmode and debuginstall are set to true set the debuginstall to false because they can't both be enabled
 if %testmode%==true if %debuginstall%==true set debuginstall=false
 
 call :DebugScreen
 pause
 
+:: If debuginstall enabled set debug to false (so it doesn't gets stuck in a loop) and go back to download and install section
 if %debuginstall%==true set debug=false & cls & goto :DownloadVCRedist
 
 cls
@@ -405,6 +414,7 @@ cls
 
 :Test
 
+:: If testmode is disable skip to next part
 if %testmode%==false goto :RemoveCache
 
 cls
@@ -440,6 +450,7 @@ cls
 
 if %keepcache%==true goto :Farewell
 
+:: If test mode is enabled run simulated cache removable
 if %testmode%==true (
     call :TestHeader
     echo Running simulated removable of cache
@@ -504,6 +515,7 @@ echo Your system will restart in 2...
 timeout /t 1 /nobreak >nul
 echo Your system will restart in 1...
 timeout /t 1 /nobreak >nul
+:: Restart the system after 02 seconds so it allows time for the script to popd and exit
 shutdown.exe /r /f /t 02 & popd & exit
 
 ::===============================================================================================================::
@@ -541,6 +553,7 @@ goto :eof
 ::===============================================================================================================::
 
 :NewVersionScreen
+call :Header
 color %cmdwcolor%
 echo LOCAL VERSION IS OUT OF DATE
 echo.
@@ -552,6 +565,7 @@ goto :eof
 ::===============================================================================================================::
 
 :PreReleaseScreen
+call :Header
 color %cmdwcolor%
 echo YOU ARE USING A PRE-RELEASE VERSION OF THE SCRIPT
 echo.
