@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.2.1
+set localversion=1.2.2
 :: Release Date
-set releasedate=03/03/2018
+set releasedate=04/03/2018
 :: Release Time
-set releasetime=20:41
+set releasetime=00:45
 :: Author's timezone
 set timezone=AEST
 
@@ -84,8 +84,13 @@ set vcredist15_64=vcredist_2015_win64.exe
 set vcredist17_32=vcredist_2017_win32.exe
 set vcredist17_64=vcredist_2017_win64.exe
 
-:: Debug mode, basically should always be false unless you are using it
+:: Debug and test mode
+:: Test mode will simulate installs and some other stuff instead of actually running the script
+:: Debug mode will show the debug screen
+:: Debug install will still download and install vcredist for real, won't work if test mode is enabled
+set testmode=false
 set debug=false
+set debuginstall=false
 
 ::===============================================================================================================::
 
@@ -212,6 +217,8 @@ goto ask2005
 :DownloadVCRedist
 
 if %debug%==true goto :Debug
+if %testmode%==true goto :Test
+
 if %vcredistdownload%==false goto :InstallVCRedist
 
 call :Header
@@ -361,19 +368,30 @@ if %arch%==32 (
     %vcredistdir%\%vcredist17_32% /install /quiet /norestart
 )
 
-cls
+cls & goto :RemoveCache
 
 ::===============================================================================================================::
 
 :Debug
 
-if %debug%==false goto :RemoveCache
+if %debug%==false goto :Test
+if %testmode%==true if %debuginstall%==true set debuginstall=false
 
 call :DebugScreen
 pause
 
+if %debuginstall%==true set debug=false & cls & goto :DownloadVCRedist
+
 cls
-call :DebugHeader
+
+::===============================================================================================================::
+
+:Test
+
+if %testmode%==false goto :RemoveCache
+
+cls
+call :TestHeader
 echo Running simulated installations
 echo.
 
@@ -394,6 +412,9 @@ if %arch%==32 (
     timeout /t 3 /nobreak >nul
 )
 
+echo.
+pause
+
 cls
 
 ::===============================================================================================================::
@@ -402,8 +423,8 @@ cls
 
 if %keepcache%==true goto :Farewell
 
-if %debug%==true (
-    call :DebugHeader
+if %testmode%==true (
+    call :TestHeader
     echo Running simulated removable of cache
     echo.
 
@@ -412,6 +433,9 @@ if %debug%==true (
 
     echo Simulated removable archiver executable
     timeout /t 3 /nobreak >nul
+    
+    echo.
+    pause
 
     cls & goto :Farewell
 )
@@ -484,18 +508,26 @@ goto :eof
 
 ::===============================================================================================================::
 
-:DebugHeader
+:TestHeader
+title TEST ENABLED %projectname% v%localversion%
 color %cmdwcolor%
-echo DEBUG MODE CURRENTLY ENABLED
+echo %projectname% v%localversion%
+echo.
+echo TEST MODE CURRENTLY ENABLED
+echo System Architecture: %arch%bit
 echo.
 goto :eof
 
 ::===============================================================================================================::
 
 :DebugScreen
-title DEBUG ENABLED %projectname% v%localversion%
+title DEBUG INFORMATION %projectname% v%localversion%
 color %cmdwcolor%
-echo DEBUG MODE CURRENTLY ENABLED
+echo DEBUG INFORMATION
+echo.
+echo testmode=%testmode%
+echo debug=%debug%
+echo debuginstall=%debuginstall%
 echo.
 echo author=%author%
 echo website=%website%
@@ -515,7 +547,6 @@ echo.
 echo versioncheck=%versioncheck%
 echo vcredistdownload=%vcredistdownload%
 echo keepcache=%keepcache%
-echo debug=%debug%
 echo scripturl=%scripturl%
 echo updateurl=%updateurl%
 echo versionurl=%versionurl%
