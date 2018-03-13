@@ -2,16 +2,20 @@
 
 **The script will grab the files it needs from my server by default, it can easily be changed though.**
 
-## Background
-
-The script was originally made (legacy versions) as a simple installer script for automated Windows installs, I decided to make the script its own thing mainly because I wanted to see what could be done with batch scripts and because I was bored. I rewrote the script because I was interested in seeing what I could do and wanted to make a modular install script that I could use for multiple things.
+*You can use this script for whatever you want, just give me some credit aye* ;)
 
 ## What does it do?
 
-The script downloads and installs Visual C++ Redistributables automatically.
+The script just downloads (from my servers) and installs Visual C++ Redistrubutables in the background without the need for user input. The script will automatically elevate it's permissions (still needs users consent) when the script is started.
 
-Just run the script, the script automatically asks for Administrator permissions and from there downloads and installs the VC++ Redists in the background.
+## How do I use it?
 
-## Customize
+Simply run the vcredistinstaller.cmd script, should be self explanatory from there.
 
-The script is pretty customizable through variables that are at the top of the script. All the variables are explained in the script.
+## Customization
+
+The script is pretty customizable through the variables that are places at the top of the script itself, all the variables are explained inside the script. I set out to make it as customizable as possible and will most likely continue making it more customizable as I continue to add things.
+
+## Background
+
+The script was originally made as a simple background installer script for automoted Windows installs, I decided to make the script its own thing because I needed to use it outside of that. I then started adding more stuff to the script because I wanted to see what I could actually do with it, I eventually decided to start over and make it customizable and modular so I could easily use it for other things. Yes, it is over complicated for the task it is designed to acomplish but that is because I wanted to see exactly what I could do with bash and I have used it in other tasks besides installing VC++ Redists since I remade the script. The only real reason it was ever uploaded to GitHub was because I wanted to learn how to properly use GitHub and Git.
