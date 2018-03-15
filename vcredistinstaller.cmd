@@ -21,7 +21,7 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.3.0-alpha2
+set localversion=1.3.0-beta1
 :: Release Date
 set releasedate=16/03/2018
 :: Release Time
@@ -49,7 +49,6 @@ set autoupdate=false
 set vcredistdownload=true
 :: Download directly from Microsoft and not from external servers
 :: If set to false, will download from external servers
-:: Doesn't do anything in v1.3.0-alpha2
 set msdownload=true
 
 :: Keep cache, if set to false it will remove the downloaded Visual C++ Redistributable files on completion
@@ -74,23 +73,6 @@ set bindir=bin
 :: vcredistdir is the name of the folder the files are store in on the local machine
 set vcredistdir=vcredist
 
-:: Download location on Microsoft servers
-set msdlvcredist05_32=
-set msdlvcredist05_64=
-set msdlvcredist08_32=https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x86.exe
-set msdlvcredist08_64=https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x64.exe
-set msdlvcredist10_32=https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe
-set msdlvcredist10_64=https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe
-set msdlvcredist12_32=https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x86.exe
-set msdlvcredist12_64=https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe
-set msdlvcredist13_32=http://download.microsoft.com/download/0/5/6/056dcda9-d667-4e27-8001-8a0c6971d6b1/vcredist_x86.exe
-set msdlvcredist13_64=http://download.microsoft.com/download/0/5/6/056dcda9-d667-4e27-8001-8a0c6971d6b1/vcredist_x64.exe
-set msdlvcredist15_32=https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe
-set msdlvcredist15_64=https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe
-set msdlvcredist17_32=https://download.visualstudio.microsoft.com/download/pr/11687613/88b50ce70017bf10f2d56d60fcba6ab1/VC_redist.x86.exe
-set msdlvcredist17_64=https://download.visualstudio.microsoft.com/download/pr/11687625/2cd2dba5748dc95950a5c42c2d2d78e4/VC_redist.x64.exe
-
-
 :: Visual C++ Redistributable versions
 :: These only change what they are called on the server not what they are called on the local machine
 :: This was changed due to timestamping on files
@@ -109,12 +91,46 @@ set vcredist15_64=vcredist_2015_win64.exe
 set vcredist17_32=vcredist_2017_win32.exe
 set vcredist17_64=vcredist_2017_win64.exe
 
+:: Download location on Microsoft servers
+set msdlvcredist05_32=
+set msdlvcredist05_64=
+set msdlvcredist08_32=https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x86.exe
+set msdlvcredist08_64=https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x64.exe
+set msdlvcredist10_32=https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe
+set msdlvcredist10_64=https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe
+set msdlvcredist12_32=https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x86.exe
+set msdlvcredist12_64=https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe
+set msdlvcredist13_32=http://download.microsoft.com/download/0/5/6/056dcda9-d667-4e27-8001-8a0c6971d6b1/vcredist_x86.exe
+set msdlvcredist13_64=http://download.microsoft.com/download/0/5/6/056dcda9-d667-4e27-8001-8a0c6971d6b1/vcredist_x64.exe
+set msdlvcredist15_32=https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe
+set msdlvcredist15_64=https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe
+set msdlvcredist17_32=https://download.visualstudio.microsoft.com/download/pr/11687613/88b50ce70017bf10f2d56d60fcba6ab1/VC_redist.x86.exe
+set msdlvcredist17_64=https://download.visualstudio.microsoft.com/download/pr/11687625/2cd2dba5748dc95950a5c42c2d2d78e4/VC_redist.x64.exe
+
+:: External download location
+set tpdlvcredist05_32=%vcredisturl%/%vcredist05_32%
+set tpdlvcredist05_64=%vcredisturl%/%vcredist05_64%
+set tpdlvcredist08_32=%vcredisturl%/%vcredist08_32%
+set tpdlvcredist08_64=%vcredisturl%/%vcredist08_64%
+set tpdlvcredist10_32=%vcredisturl%/%vcredist10_32%
+set tpdlvcredist10_64=%vcredisturl%/%vcredist10_64%
+set tpdlvcredist12_32=%vcredisturl%/%vcredist12_32%
+set tpdlvcredist12_64=%vcredisturl%/%vcredist12_64%
+set tpdlvcredist13_32=%vcredisturl%/%vcredist13_32%
+set tpdlvcredist13_64=%vcredisturl%/%vcredist13_64%
+set tpdlvcredist15_32=%vcredisturl%/%vcredist15_32%
+set tpdlvcredist15_64=%vcredisturl%/%vcredist15_64%
+set tpdlvcredist17_32=%vcredisturl%/%vcredist17_32%
+set tpdlvcredist17_64=%vcredisturl%/%vcredist17_64%
+
 :: Debug and test mode
 :: Test mode will simulate installs and some other stuff instead of actually running the script
 :: Debug mode will show the debug screen
+:: Debug show download will show the download urls on the end screen
 :: Debug install will still download and install vcredist for real, won't work if test mode is enabled
 set testmode=false
 set debug=false
+set debugshowdl=true
 set debuginstall=false
 
 ::===============================================================================================================::
@@ -275,73 +291,100 @@ echo Download status can be seen in the title of the window
 echo.
 if not exist %vcredistdir% md %vcredistdir%
 
-if %msdownload%==true goto MicrosoftDownload
+if %msdownload%==true (
+    set dlvcredist05_32=%tpdlvcredist05_32%
+    set dlvcredist05_64=%tpdlvcredist05_64%
+    set dlvcredist08_32=%msdlvcredist08_32%
+    set dlvcredist08_64=%msdlvcredist08_64%
+    set dlvcredist10_32=%msdlvcredist10_32%
+    set dlvcredist10_64=%msdlvcredist10_64%
+    set dlvcredist12_32=%msdlvcredist12_32%
+    set dlvcredist12_64=%msdlvcredist12_64%
+    set dlvcredist13_32=%msdlvcredist13_32%
+    set dlvcredist13_64=%msdlvcredist13_64%
+    set dlvcredist15_32=%msdlvcredist15_32%
+    set dlvcredist15_64=%msdlvcredist15_64%
+    set dlvcredist17_32=%msdlvcredist17_32%
+    set dlvcredist17_64=%msdlvcredist17_64%
+) else (
+    set dlvcredist05_32=%tpdlvcredist05_32%
+    set dlvcredist05_64=%tpdlvcredist05_64%
+    set dlvcredist08_32=%tpdlvcredist08_32%
+    set dlvcredist08_64=%tpdlvcredist08_64%
+    set dlvcredist10_32=%tpdlvcredist10_32%
+    set dlvcredist10_64=%tpdlvcredist10_64%
+    set dlvcredist12_32=%tpdlvcredist12_32%
+    set dlvcredist12_64=%tpdlvcredist12_64%
+    set dlvcredist13_32=%tpdlvcredist13_32%
+    set dlvcredist13_64=%tpdlvcredist13_64%
+    set dlvcredist15_32=%tpdlvcredist15_32%
+    set dlvcredist15_64=%tpdlvcredist15_64%
+    set dlvcredist17_32=%tpdlvcredist17_32%
+    set dlvcredist17_64=%tpdlvcredist17_64%
+)
 
-:ExternalDownload
-
-:MicrosoftDownload
 :: Download for 64bit system
 if %arch%==64 (
     if %install05%==true (
         echo Downloading Visual C++ Redistributable 2005 x86
-        %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist05_32% >nul 2>&1
+        %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist05_32% %dlvcredist05_32% >nul 2>&1
         echo Downloading Visual C++ Redistributable 2005 x64
-        %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist05_64% >nul 2>&1
+        %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist05_64% %dlvcredist05_64% >nul 2>&1
     )
     echo Downloading Visual C++ Redistributable 2008 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_32% %msdlvcredist08_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_32% %dlvcredist08_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2008 x64
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_64% %msdlvcredist08_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_64% %dlvcredist08_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2010 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_32% %msdlvcredist10_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_32% %dlvcredist10_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2010 x64
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_64% %msdlvcredist08_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_64% %dlvcredist08_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2012 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_32% %msdlvcredist12_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_32% %dlvcredist12_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2012 x64
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_64% %msdlvcredist12_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_64% %dlvcredist12_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2013 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_32% %msdlvcredist13_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_32% %dlvcredist13_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2013 x64
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_64% %msdlvcredist13_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_64% %dlvcredist13_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2015 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_32% %msdlvcredist15_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_32% %dlvcredist15_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2015 x64
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_64% %msdlvcredist15_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_64% %dlvcredist15_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist17_32% %msdlvcredist17_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist17_32% %dlvcredist17_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist_64% %msdlvcredist17_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist_64% %dlvcredist17_64% >nul 2>&1
 )
 
 :: Download for 32bit system
 if %arch%==32 (
     if %install05%==true (
         echo Downloading Visual C++ Redistributable 2005 x86
-        %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist05_32% >nul 2>&1
+        %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist05_32% %dlvcredist05_32% >nul 2>&1
     )
     echo Downloading Visual C++ Redistributable 2008 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_32% %msdlvcredist08_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_32% %dlvcredist08_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2010 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_32% %msdlvcredist10_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_32% %dlvcredist10_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2012 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_32% %msdlvcredist12_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_32% %dlvcredist12_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2013 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_32% %msdlvcredist13_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_32% %dlvcredist13_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2015 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_32% %msdlvcredist15_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_32% %dlvcredist15_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist17_32% %msdlvcredist17_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist17_32% %dlvcredist17_32% >nul 2>&1
 )
 
 cls
@@ -433,6 +476,9 @@ if %debug%==false goto :Test
 if %testmode%==true if %debuginstall%==true set debuginstall=false
 
 call :DebugScreen
+pause
+
+if %debugshowdl%==true call :DownloadDebugScreen
 pause
 
 :: If debuginstall enabled set debug to false (so it doesn't gets stuck in a loop) and go back to download and install section
@@ -550,7 +596,7 @@ echo Your system will restart in 1...
 timeout /t 1 /nobreak >nul
 
 :: Restart the system after 02 seconds so it allows time for the script to popd and exit
-if %osver%==winxp (shutdown.exe -r -f -t 02 & popd & exit) else ( shutdown.exe /r /f /t 02 & popd & exit )
+if %osver%==winxp ( shutdown.exe -r -f -t 02 & popd & exit ) else ( shutdown.exe /r /f /t 02 & popd & exit )
 
 ::===============================================================================================================::
 
@@ -626,7 +672,7 @@ goto :eof
 
 ::===============================================================================================================::
 
-:DebugScreen
+:DebugHeader
 title DEBUG INFORMATION %projectname% v%localversion%
 color %cmdwcolor%
 echo DEBUG INFORMATION
@@ -635,10 +681,17 @@ echo Windows Version: %osver%
 echo Windows Build: %winbuild%
 echo System Architecture: %arch%bit
 echo.
-echo testmode=%testmode%
-echo debug=%debug%
-echo debuginstall=%debuginstall%
+echo Test Mode: %testmode%
+echo Debug Mode: %debug%
+echo Show Download Debug: %debugshowdl%
+echo Debug Real Install: %debuginstall%
 echo.
+goto :eof
+
+::===============================================================================================================::
+
+:DebugScreen
+call :DebugHeader
 echo author=%author%
 echo website=%website%
 echo projectname=%projectname%
@@ -654,6 +707,7 @@ echo.
 echo versioncheck=%versioncheck%
 echo autoupdate=%autoupdate%
 echo vcredistdownload=%vcredistdownload%
+echo msdownload=%msdownload%
 echo keepcache=%keepcache%
 echo disablerestart=%autorestart%
 echo autorestart=%autorestart%
@@ -671,5 +725,73 @@ echo archiver=%archiver%
 echo.
 echo bindir=%bindir%
 echo vcredistdir=%vcredistdir%
+echo.
+goto :eof
+
+::===============================================================================================================::
+
+:DownloadDebugScreen
+call :DebugHeader
+echo vcredistdir=%vcredistdir%
+echo.
+echo vcredist05_32=%vcredist05_32%
+echo vcredist05_64=%vcredist05_64%
+echo vcredist08_32=%vcredist08_32%
+echo vcredist08_64=%vcredist08_64%
+echo vcredist10_32=%vcredist10_32%
+echo vcredist10_64=%vcredist10_64%
+echo vcredist12_32=%vcredist12_32%
+echo vcredist12_64=%vcredist12_64%
+echo vcredist13_32=%vcredist13_32%
+echo vcredist13_64=%vcredist13_64%
+echo vcredist15_32=%vcredist15_32%
+echo vcredist15_64=%vcredist15_64%
+echo vcredist17_32=%vcredist17_32%
+echo vcredist17_64=%vcredist17_64%
+echo.
+echo msdlvcredist05_32=%msdlvcredist05_32%
+echo msdlvcredist05_64=%msdlvcredist05_64%
+echo msdlvcredist08_32=%msdlvcredist08_32%
+echo msdlvcredist08_64=%msdlvcredist08_64%
+echo msdlvcredist10_32=%msdlvcredist10_32%
+echo msdlvcredist10_64=%msdlvcredist10_64%
+echo msdlvcredist12_32=%msdlvcredist12_32%
+echo msdlvcredist12_64=%msdlvcredist12_64%
+echo msdlvcredist13_32=%msdlvcredist13_32%
+echo msdlvcredist13_64=%msdlvcredist13_64%
+echo msdlvcredist15_32=%msdlvcredist15_32%
+echo msdlvcredist15_64=%msdlvcredist15_64%
+echo msdlvcredist17_32=%msdlvcredist17_32%
+echo msdlvcredist17_64=%msdlvcredist17_64%
+echo.
+echo tpdlvcredist05_32=%tpdlvcredist05_32%
+echo tpdlvcredist05_64=%tpdlvcredist05_64%
+echo tpdlvcredist08_32=%tpdlvcredist08_32%
+echo tpdlvcredist08_64=%tpdlvcredist08_64%
+echo tpdlvcredist10_32=%tpdlvcredist10_32%
+echo tpdlvcredist10_64=%tpdlvcredist10_64%
+echo tpdlvcredist12_32=%tpdlvcredist12_32%
+echo tpdlvcredist12_64=%tpdlvcredist12_64%
+echo tpdlvcredist13_32=%tpdlvcredist13_32%
+echo tpdlvcredist13_64=%tpdlvcredist13_64%
+echo tpdlvcredist15_32=%tpdlvcredist15_32%
+echo tpdlvcredist15_64=%tpdlvcredist15_64%
+echo tpdlvcredist17_32=%tpdlvcredist17_32%
+echo tpdlvcredist17_64=%tpdlvcredist17_64%
+echo.
+echo dlvcredist05_32=%dlvcredist05_32%
+echo dlvcredist05_64=%dlvcredist05_64%
+echo dlvcredist08_32=%dlvcredist08_32%
+echo dlvcredist08_64=%dlvcredist08_64%
+echo dlvcredist10_32=%dlvcredist10_32%
+echo dlvcredist10_64=%dlvcredist10_64%
+echo dlvcredist12_32=%dlvcredist12_32%
+echo dlvcredist12_64=%dlvcredist12_64%
+echo dlvcredist13_32=%dlvcredist13_32%
+echo dlvcredist13_64=%dlvcredist13_64%
+echo dlvcredist15_32=%dlvcredist15_32%
+echo dlvcredist15_64=%dlvcredist15_64%
+echo dlvcredist17_32=%dlvcredist17_32%
+echo dlvcredist17_64=%dlvcredist17_64%
 echo.
 goto :eof

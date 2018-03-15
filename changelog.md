@@ -2,7 +2,12 @@
 + Adding the choice to install or not install certain versions
 + Relaunch script after update
 
-# v1.3.0-alpha2
+# v1.3.0-beta1
++ Now can download from either Microsoft servers or your own servers (default is mine)
++ Options for downloading in variables
++ Added debug screen for download links
+
+## v1.3.0-alpha2
 + Fixed download overwritting
 
 ## v1.3.0-alpha1
