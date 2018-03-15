@@ -21,7 +21,7 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.3.0-alpha1
+set localversion=1.3.0-alpha2
 :: Release Date
 set releasedate=16/03/2018
 :: Release Time
@@ -47,6 +47,10 @@ set autoupdate=false
 :: If you disable the auto download you will have to manually download and place the files in the correct folder
 :: You can change the name of the folder and files below or just rename the exes to the default folder and exe names
 set vcredistdownload=true
+:: Download directly from Microsoft and not from external servers
+:: If set to false, will download from external servers
+:: Doesn't do anything in v1.3.0-alpha2
+set msdownload=true
 
 :: Keep cache, if set to false it will remove the downloaded Visual C++ Redistributable files on completion
 set keepcache=true
@@ -271,6 +275,11 @@ echo Download status can be seen in the title of the window
 echo.
 if not exist %vcredistdir% md %vcredistdir%
 
+if %msdownload%==true goto MicrosoftDownload
+
+:ExternalDownload
+
+:MicrosoftDownload
 :: Download for 64bit system
 if %arch%==64 (
     if %install05%==true (
@@ -280,34 +289,34 @@ if %arch%==64 (
         %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist05_64% >nul 2>&1
     )
     echo Downloading Visual C++ Redistributable 2008 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist08_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_32% %msdlvcredist08_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2008 x64
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist08_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_64% %msdlvcredist08_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2010 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist10_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_32% %msdlvcredist10_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2010 x64
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist08_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_64% %msdlvcredist08_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2012 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist12_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_32% %msdlvcredist12_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2012 x64
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist12_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_64% %msdlvcredist12_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2013 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist13_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_32% %msdlvcredist13_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2013 x64
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist13_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_64% %msdlvcredist13_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2015 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist15_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_32% %msdlvcredist15_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2015 x64
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist15_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_64% %msdlvcredist15_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist17_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist17_32% %msdlvcredist17_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist17_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist_64% %msdlvcredist17_64% >nul 2>&1
 )
 
 :: Download for 32bit system
@@ -317,22 +326,22 @@ if %arch%==32 (
         %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist05_32% >nul 2>&1
     )
     echo Downloading Visual C++ Redistributable 2008 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist08_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_32% %msdlvcredist08_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2010 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist10_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_32% %msdlvcredist10_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2012 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist12_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_32% %msdlvcredist12_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2013 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist13_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_32% %msdlvcredist13_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2015 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist15_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_32% %msdlvcredist15_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist17_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist17_32% %msdlvcredist17_32% >nul 2>&1
 )
 
 cls
