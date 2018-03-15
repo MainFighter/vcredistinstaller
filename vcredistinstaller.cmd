@@ -23,9 +23,9 @@ set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
 set localversion=1.3.0-alpha1
 :: Release Date
-set releasedate=13/03/2018
+set releasedate=16/03/2018
 :: Release Time
-set releasetime=13:40
+set releasetime=XX:XX
 :: Author's timezone
 set timezone=AEST
 
