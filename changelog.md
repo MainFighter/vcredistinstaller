@@ -2,7 +2,14 @@
 + Adding the choice to install or not install certain versions
 + Relaunch script after update
 
-# v1.3.0-beta1
+# v1.3.0
++ You can now choose to download from Microsoft servers (Default option) or Third-Party Servers (Mine by default).
+- Downside, will now overwrite the download files everytime instead of only downloading them when a new file is detected. I don't really know a way around this.
+
+###### Changes beta1
+Downloads 2005 from Microsoft
+
+## v1.3.0-beta1
 + Now can download from either Microsoft servers or your own servers (default is mine)
 + Options for downloading in variables
 + Added debug screen for download links

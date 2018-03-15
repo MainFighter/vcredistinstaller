@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.3.0-beta1
+set localversion=1.3.0
 :: Release Date
 set releasedate=16/03/2018
 :: Release Time
-set releasetime=XX:XX
+set releasetime=10:28
 :: Author's timezone
 set timezone=AEST
 
@@ -92,8 +92,8 @@ set vcredist17_32=vcredist_2017_win32.exe
 set vcredist17_64=vcredist_2017_win64.exe
 
 :: Download location on Microsoft servers
-set msdlvcredist05_32=
-set msdlvcredist05_64=
+set msdlvcredist05_32=https://download.microsoft.com/download/d/3/4/d342efa6-3266-4157-a2ec-5174867be706/vcredist_x86.exe
+set msdlvcredist05_64=https://download.microsoft.com/download/9/1/4/914851c6-9141-443b-bdb4-8bad3a57bea9/vcredist_x64.exe
 set msdlvcredist08_32=https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x86.exe
 set msdlvcredist08_64=https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x64.exe
 set msdlvcredist10_32=https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe
@@ -292,8 +292,8 @@ echo.
 if not exist %vcredistdir% md %vcredistdir%
 
 if %msdownload%==true (
-    set dlvcredist05_32=%tpdlvcredist05_32%
-    set dlvcredist05_64=%tpdlvcredist05_64%
+    set dlvcredist05_32=%msdlvcredist05_32%
+    set dlvcredist05_64=%msdlvcredist05_64%
     set dlvcredist08_32=%msdlvcredist08_32%
     set dlvcredist08_64=%msdlvcredist08_64%
     set dlvcredist10_32=%msdlvcredist10_32%
