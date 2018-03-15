@@ -2,7 +2,7 @@
 + Adding the choice to install or not install certain versions
 + Relaunch script after update
 
-# v1.3.0-alpha
+## v1.3.0-alpha1
 + Now downloading from Microsoft servers, besides 2005
 
 ## v1.2.9

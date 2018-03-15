@@ -21,7 +21,7 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.3.0-alpha
+set localversion=1.3.0-alpha1
 :: Release Date
 set releasedate=13/03/2018
 :: Release Time
