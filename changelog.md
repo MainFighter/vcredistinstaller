@@ -2,7 +2,10 @@
 + Adding the choice to install or not install certain versions
 + Relaunch script after update
 
-# v1.2.9
+# v1.3.0-alpha
++ Now downloading from Microsoft servers, besides 2005
+
+## v1.2.9
 + Tweaked what osver outputs
 + WinXP support for restart (script still doesn't fully support windows xp and probably never will)
 + Added test mode for restart

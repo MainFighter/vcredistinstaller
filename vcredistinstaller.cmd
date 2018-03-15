@@ -21,7 +21,7 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.2.9
+set localversion=1.3.0-alpha
 :: Release Date
 set releasedate=13/03/2018
 :: Release Time
@@ -69,6 +69,23 @@ set bindir=bin
 
 :: vcredistdir is the name of the folder the files are store in on the local machine
 set vcredistdir=vcredist
+
+:: Download location on Microsoft servers
+set msdlvcredist05_32=
+set msdlvcredist05_64=
+set msdlvcredist08_32=https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x86.exe
+set msdlvcredist08_64=https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x64.exe
+set msdlvcredist10_32=https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe
+set msdlvcredist10_64=https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe
+set msdlvcredist12_32=https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x86.exe
+set msdlvcredist12_64=https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe
+set msdlvcredist13_32=http://download.microsoft.com/download/0/5/6/056dcda9-d667-4e27-8001-8a0c6971d6b1/vcredist_x86.exe
+set msdlvcredist13_64=http://download.microsoft.com/download/0/5/6/056dcda9-d667-4e27-8001-8a0c6971d6b1/vcredist_x64.exe
+set msdlvcredist15_32=https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe
+set msdlvcredist15_64=https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe
+set msdlvcredist17_32=https://download.visualstudio.microsoft.com/download/pr/11687613/88b50ce70017bf10f2d56d60fcba6ab1/VC_redist.x86.exe
+set msdlvcredist17_64=https://download.visualstudio.microsoft.com/download/pr/11687625/2cd2dba5748dc95950a5c42c2d2d78e4/VC_redist.x64.exe
+
 
 :: Visual C++ Redistributable versions
 :: These only change what they are called on the server not what they are called on the local machine
@@ -263,34 +280,34 @@ if %arch%==64 (
         %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist05_64% >nul 2>&1
     )
     echo Downloading Visual C++ Redistributable 2008 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist08_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist08_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2008 x64
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist08_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist08_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2010 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist10_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist10_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2010 x64
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist10_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist08_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2012 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist12_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist12_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2012 x64
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist12_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist12_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2013 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist13_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist13_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2013 x64
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist13_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist13_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2015 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist15_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist15_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2015 x64
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist15_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist15_64% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist17_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist17_32% >nul 2>&1
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist17_64% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist17_64% >nul 2>&1
 )
 
 :: Download for 32bit system
@@ -300,22 +317,22 @@ if %arch%==32 (
         %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist05_32% >nul 2>&1
     )
     echo Downloading Visual C++ Redistributable 2008 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist08_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist08_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2010 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist10_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist10_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2012 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist12_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist12_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2013 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist13_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist13_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2015 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist15_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist15_32% >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %vcredisturl%/%vcredist17_32% >nul 2>&1
+    %wget% --no-check-certificate --timestamping --directory-prefix=%vcredistdir% %msdlvcredist17_32% >nul 2>&1
 )
 
 cls

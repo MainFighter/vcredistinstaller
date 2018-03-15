@@ -1,6 +1,7 @@
 # Visual C++ Redistributable Download and Installer script
 
-**The script will grab the files it needs from my server by default, it can easily be changed though.**
+**Testing for downloading VCRedist installers from Microsoft instead of my own**
+**The script will grab other files (7zip, version file, auto update files) from my server still, can easily be changed if you so desire**
 
 *You can use this script for whatever you want, just give me some credit aye* ;)
 
