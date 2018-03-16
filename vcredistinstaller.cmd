@@ -21,7 +21,7 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.3.0
+set localversion=1.3.1
 :: Release Date
 set releasedate=16/03/2018
 :: Release Time
@@ -292,8 +292,8 @@ echo.
 if not exist %vcredistdir% md %vcredistdir%
 
 if %msdownload%==true (
-    set dlvcredist05_32=%msdlvcredist05_32%
-    set dlvcredist05_64=%msdlvcredist05_64%
+    set dlvcredist05_32=%tpdlvcredist05_32%
+    set dlvcredist05_64=%tpdlvcredist05_64%
     set dlvcredist08_32=%msdlvcredist08_32%
     set dlvcredist08_64=%msdlvcredist08_64%
     set dlvcredist10_32=%msdlvcredist10_32%
@@ -327,64 +327,64 @@ if %msdownload%==true (
 if %arch%==64 (
     if %install05%==true (
         echo Downloading Visual C++ Redistributable 2005 x86
-        %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist05_32% %dlvcredist05_32% >nul 2>&1
+        ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist05_32%" "%dlvcredist05_32%" >nul 2>&1
         echo Downloading Visual C++ Redistributable 2005 x64
-        %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist05_64% %dlvcredist05_64% >nul 2>&1
+        ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist05_64%" "%dlvcredist05_64%" >nul 2>&1
     )
     echo Downloading Visual C++ Redistributable 2008 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_32% %dlvcredist08_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist08_32%" "%dlvcredist08_32%" >nul 2>&1
     echo Downloading Visual C++ Redistributable 2008 x64
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_64% %dlvcredist08_64% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist08_64%" "%dlvcredist08_64%" >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2010 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_32% %dlvcredist10_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist10_32%" "%dlvcredist10_32%" >nul 2>&1
     echo Downloading Visual C++ Redistributable 2010 x64
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_64% %dlvcredist08_64% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist10_64%" "%dlvcredist10_64%" >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2012 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_32% %dlvcredist12_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist12_32%" "%dlvcredist12_32%" >nul 2>&1
     echo Downloading Visual C++ Redistributable 2012 x64
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_64% %dlvcredist12_64% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist12_64%" "%dlvcredist12_64%" >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2013 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_32% %dlvcredist13_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist13_32%" "%dlvcredist13_32%" >nul 2>&1
     echo Downloading Visual C++ Redistributable 2013 x64
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_64% %dlvcredist13_64% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist13_64%" "%dlvcredist13_64%" >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2015 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_32% %dlvcredist15_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist15_32%" "%dlvcredist15_32%" >nul 2>&1
     echo Downloading Visual C++ Redistributable 2015 x64
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_64% %dlvcredist15_64% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist15_64%" "%dlvcredist15_64%" >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist17_32% %dlvcredist17_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist17_32%" "%dlvcredist17_32%" >nul 2>&1
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist_64% %dlvcredist17_64% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist17_64%" "%dlvcredist17_64%" >nul 2>&1
 )
 
 :: Download for 32bit system
 if %arch%==32 (
     if %install05%==true (
         echo Downloading Visual C++ Redistributable 2005 x86
-        %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist05_32% %dlvcredist05_32% >nul 2>&1
+        ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist05_32%" "%dlvcredist05_32%" >nul 2>&1
     )
     echo Downloading Visual C++ Redistributable 2008 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist08_32% %dlvcredist08_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist08_32%" "%dlvcredist08_32%" >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2010 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist10_32% %dlvcredist10_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist10_32%" "%dlvcredist10_32%" >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2012 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist12_32% %dlvcredist12_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist12_32%" "%dlvcredist12_32%" >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2013 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist13_32% %dlvcredist13_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist13_32%" "%dlvcredist13_32%" >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2015 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist15_32% %dlvcredist15_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist15_32%" "%dlvcredist15_32%" >nul 2>&1
 
     echo Downloading Visual C++ Redistributable 2017 x86
-    %wget% --no-check-certificate --timestamping --output-document=%vcredistdir%\%vcredist17_32% %dlvcredist17_32% >nul 2>&1
+    ".\%wget%" --no-check-certificate --timestamping --output-document="%vcredistdir%\%vcredist17_32%" "%dlvcredist17_32%" >nul 2>&1
 )
 
 cls
@@ -401,66 +401,66 @@ echo.
 if %arch%==64 (
     if %install05%==true (
         echo Installing Visual C++ Redistributable 2005 x86
-        %vcredistdir%\%vcredist05_32% /q:a /c:"VCREDI~3.EXE /q:a /c:""msiexec /i vcredist.msi /qn"" "
+        ".\%vcredistdir%\%vcredist05_32%" /q:a /c:"VCREDI~3.EXE /q:a /c:""msiexec /i vcredist.msi /qn"" "
         echo Installing Visual C++ Redistributable 2005 x64
-        %vcredistdir%\%vcredist05_64% /q:a /c:"VCREDI~2.EXE /q:a /c:""msiexec /i vcredist.msi /qn"" "
+        ".\%vcredistdir%\%vcredist05_64%" /q:a /c:"VCREDI~2.EXE /q:a /c:""msiexec /i vcredist.msi /qn"" "
     )
 
     echo Installing Visual C++ Redistributable 2008 x86
-    %vcredistdir%\%vcredist08_32% /q
+    ".\%vcredistdir%\%vcredist08_32%" /q
     echo Installing Visual C++ Redistributable 2008 x64
-    %vcredistdir%\%vcredist08_64% /q
+    ".\%vcredistdir%\%vcredist08_64%" /q
 
     echo Installing Visual C++ Redistributable 2010 x86
-    %vcredistdir%\%vcredist10_32% /q /norestart
+    ".\%vcredistdir%\%vcredist10_32%" /q /norestart
     echo Installing Visual C++ Redistributable 2010 x64
-    %vcredistdir%\%vcredist10_64% /q /norestart
+    ".\%vcredistdir%\%vcredist10_64%" /q /norestart
 
     echo Installing Visual C++ Redistributable 2012 x86
-    %vcredistdir%\%vcredist12_32% /q /norestart
+    ".\%vcredistdir%\%vcredist12_32%" /q /norestart
     echo Installing Visual C++ Redistributable 2012 x64
-    %vcredistdir%\%vcredist12_64% /q /norestart
+    ".\%vcredistdir%\%vcredist12_64%" /q /norestart
 
     echo Installing Visual C++ Redistributable 2013 x86
-    %vcredistdir%\%vcredist13_32% /install /quiet /norestart
+    ".\%vcredistdir%\%vcredist13_32%" /install /quiet /norestart
     echo Installing Visual C++ Redistributable 2013 x64
-    %vcredistdir%\%vcredist13_64% /install /quiet /norestart
+    ".\%vcredistdir%\%vcredist13_64%" /install /quiet /norestart
 
     echo Installing Visual C++ Redistributable 2015 x86
-    %vcredistdir%\%vcredist15_32% /install /quiet /norestart
+    ".\%vcredistdir%\%vcredist15_32%" /install /quiet /norestart
     echo Installing Visual C++ Redistributable 2015 x64
-    %vcredistdir%\%vcredist15_64% /install /quiet /norestart
+    ".\%vcredistdir%\%vcredist15_64%" /install /quiet /norestart
 
     echo Installing Visual C++ Redistributable 2017 x86
-    %vcredistdir%\%vcredist17_32% /install /quiet /norestart
+    ".\%vcredistdir%\%vcredist17_32%" /install /quiet /norestart
     echo Installing Visual C++ Redistributable 2017 x64
-    %vcredistdir%\%vcredist17_64% /install /quiet /norestart
+    ".\%vcredistdir%\%vcredist17_64%" /install /quiet /norestart
 )
 
 :: Install for 32bit system
 if %arch%==32 (
     if %install05%==true (
         echo Installing Visual C++ Redistributable 2005 x86
-        %vcredistdir%\%vcredist05_32% /q:a /c:"VCREDI~3.EXE /q:a /c:""msiexec /i vcredist.msi /qn"" "
+        ".\%vcredistdir%\%vcredist05_32%" /q:a /c:"VCREDI~3.EXE /q:a /c:""msiexec /i vcredist.msi /qn"" "
     )
 
     echo Installing Visual C++ Redistributable 2008 x86
-    %vcredistdir%\%vcredist08_32% /q
+    ".\%vcredistdir%\%vcredist08_32%" /q
 
     echo Installing Visual C++ Redistributable 2010 x86
-    %vcredistdir%\%vcredist10_32% /q /norestart
+    ".\%vcredistdir%\%vcredist10_32%" /q /norestart
 
     echo Installing Visual C++ Redistributable 2012 x86
-    %vcredistdir%\%vcredist12_32% /q /norestart
+    ".\%vcredistdir%\%vcredist12_32%" /q /norestart
 
     echo Installing Visual C++ Redistributable 2013 x86
-    %vcredistdir%\%vcredist13_32% /install /quiet /norestart
+    ".\%vcredistdir%\%vcredist13_32%" /install /quiet /norestart
 
     echo Installing Visual C++ Redistributable 2015 x86
-    %vcredistdir%\%vcredist15_32% /install /quiet /norestart
+    ".\%vcredistdir%\%vcredist15_32%" /install /quiet /norestart
 
     echo Installing Visual C++ Redistributable 2017 x86
-    %vcredistdir%\%vcredist17_32% /install /quiet /norestart
+    ".\%vcredistdir%\%vcredist17_32%" /install /quiet /norestart
 )
 
 :: Skips over debug and test mode

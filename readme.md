@@ -2,6 +2,8 @@
 
 **The script will download the Visual C++ Redistributables from Microsoft**
 
+**2005 still downloads from my server till I can resolve the issues I was having with it**
+
 *7zip (needed for auto update), version file and auto update files all come from my servers*
 
 *You can use this script for whatever you want, just give me some credit aye* ;)

@@ -2,7 +2,11 @@
 + Adding the choice to install or not install certain versions
 + Relaunch script after update
 
-# v1.3.0
+# v1.3.1
++ Fixed problem where it downloaded 2008 x64 instead of 2010 x64
++ Changed 2005 download back to my server because the Microsoft download was causing issues that I can't figure out a way to fix
+
+## v1.3.0
 + You can now choose to download from Microsoft servers (Default option) or Third-Party Servers (Mine by default).
 - Downside, will now overwrite the download files everytime instead of only downloading them when a new file is detected. I don't really know a way around this.
 
