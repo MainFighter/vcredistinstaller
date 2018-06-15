@@ -21,11 +21,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.3.1
+set localversion=1.3.2
 :: Release Date
-set releasedate=16/03/2018
+set releasedate=16/06/2018
 :: Release Time
-set releasetime=10:28
+set releasetime=9:11
 :: Author's timezone
 set timezone=AEST
 
@@ -50,6 +50,15 @@ set vcredistdownload=true
 :: Download directly from Microsoft and not from external servers
 :: If set to false, will download from external servers
 set msdownload=true
+
+:: Unattend Mode
+:: Runs compeletly unattended
+set unattend=false
+:: Whether to restart at the end of install when unattend mode is enabled
+set unattendrestart=false
+:: Installs only the recommended versions
+:: Will currently just stop 2005 from being installed if set to true
+set installrecommended=true
 
 :: Keep cache, if set to false it will remove the downloaded Visual C++ Redistributable files on completion
 set keepcache=true
@@ -146,7 +155,7 @@ if exist OPEN_cmd_FILE_NOT_bat_FILE.txt del /f /q OPEN_cmd_FILE_NOT_bat_FILE.txt
 :: Displays welcome screen
 :: The screens are being called from the bottom of the script
 call :WelcomeScreen
-pause
+if %unattend%==true ( timeout /t 3 /nobreak >nul ) else ( pause )
 cls
 
 ::===============================================================================================================::
@@ -208,8 +217,8 @@ if exist %versionfile% del /f /q %versionfile% >nul 2>&1
 set "localversioncheck=%localversion:.=%"
 set "remoteversioncheck=%remoteversion:.=%"
 
-:: Checks if local version is great than remote version. If local is great than remote it calls the PreReleaseScreen, pauses and then continues
-if /i %localversioncheck% gtr %remoteversioncheck% cls & title %cmdtitle% & call :PreReleaseScreen & pause & cls & goto :ChooseVersions
+:: Checks if local version is greater than remote version. If local is greater than remote it calls the PreReleaseScreen, pauses and then continues
+if /i %localversioncheck% gtr %remoteversioncheck% cls & title %cmdtitle% & call :PreReleaseScreen & if %unattend%==true ( timeout /t 3 /nobreak >nul ) else ( pause ) & cls & goto :ChooseVersions
 :: Determines if local is less than remote and either gotos auto update or continues
 if /i %localversioncheck% lss %remoteversioncheck% ( set updateurl=%updateurl%/v%remoteversion%.7z & cls & goto :AutoUpdate ) else ( cls & goto :ChooseVersions )
 
@@ -257,13 +266,16 @@ call :NewVersionScreen
 :ChooseVersions
 call :Header
 
+if %installrecommended%==true ( set install05=false ) else ( install05=true )
+if %unattend%==true cls & goto DownloadVCRedist
+
 :ask2005
 echo Visual C++ Redistributables 2005 are no longer offically supported by Microsoft as of April 12th 2016.
 echo Do you want to install it? (y/n)
 set input=
 set /p input=Type input: %=%
-If /i %input%==y set install05=true & cls & goto DownloadVCRedist
-If /i %input%==n set install05=false & cls & goto DownloadVCRedist
+if /i %input%==y set install05=true & cls & goto DownloadVCRedist
+if /i %input%==n set install05=false & cls & goto DownloadVCRedist
 cls
 color 0C
 echo.
@@ -561,6 +573,8 @@ cls
 :Farewell
 call :FarewellScreen
 
+if %unattendrestart%==true cls & goto Restart
+if %unattend%==true timeout /t 3 /nobreak >nul & popd & exit
 if %disablerestart%==true timeout /t 3 /nobreak >nul & popd & exit
 if %autorestart%==true cls & goto :Restart
 

@@ -2,7 +2,12 @@
 + Adding the choice to install or not install certain versions
 + Relaunch script after update
 
-# v1.3.1
+# v1.3.2
++ Added a proper unattended mode
++ Fixed issue with restart not showing up at end
++ Spelling mistake
+
+## v1.3.1
 + Fixed problem where it downloaded 2008 x64 instead of 2010 x64
 + Changed 2005 download back to my server because the Microsoft download was causing issues that I can't figure out a way to fix
 
