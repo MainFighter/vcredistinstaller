@@ -1,15 +1,8 @@
+@echo off
+pushd %~dp0 & call :CheckAdminRights
+
 :: Made by Main Fighter [mainfighter.com]
 :: Visual C++ Redistrubutable Download and Installer script
-
-@echo off
-cls
-pushd %~dp0
-
-:CheckAdminRights
-:: Sets local for elevate script
-set uac=%temp%\mfvcinstall_getadmin.vbs
-:: Create script to get admin rights
-fltmc >nul 2>&1 || (title Requesting Administrator Privileges & color CF & echo Requesting Administrator Privileges... & (echo Set uac=CreateObject^("Shell.Application"^):uac.ShellExecute "%~f0","","","runas",1)>%uac% & %uac% & if exist %uac% del /f /q %uac% & popd & exit)
 
 :: Project Information
 :: Author
@@ -21,11 +14,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.3.2
+set localversion=1.3.3
 :: Release Date
-set releasedate=16/06/2018
+set releasedate=21/06/2018
 :: Release Time
-set releasetime=9:11
+set releasetime=5:37
 :: Author's timezone
 set timezone=AEST
 
@@ -54,8 +47,6 @@ set msdownload=true
 :: Unattend Mode
 :: Runs compeletly unattended
 set unattend=false
-:: Whether to restart at the end of install when unattend mode is enabled
-set unattendrestart=false
 :: Installs only the recommended versions
 :: Will currently just stop 2005 from being installed if set to true
 set installrecommended=true
@@ -137,7 +128,7 @@ set tpdlvcredist17_64=%vcredisturl%/%vcredist17_64%
 :: Debug mode will show the debug screen
 :: Debug show download will show the download urls on the end screen
 :: Debug install will still download and install vcredist for real, won't work if test mode is enabled
-set testmode=false
+set testmode=true
 set debug=false
 set debugshowdl=true
 set debuginstall=false
@@ -573,7 +564,6 @@ cls
 :Farewell
 call :FarewellScreen
 
-if %unattendrestart%==true cls & goto Restart
 if %unattend%==true timeout /t 3 /nobreak >nul & popd & exit
 if %disablerestart%==true timeout /t 3 /nobreak >nul & popd & exit
 if %autorestart%==true cls & goto :Restart
@@ -611,6 +601,15 @@ timeout /t 1 /nobreak >nul
 
 :: Restart the system after 02 seconds so it allows time for the script to popd and exit
 if %osver%==winxp ( shutdown.exe -r -f -t 02 & popd & exit ) else ( shutdown.exe /r /f /t 02 & popd & exit )
+
+::===============================================================================================================::
+
+:CheckAdminRights
+:: Sets local for elevate script
+set uac=%temp%\mfvcinstall_getadmin.vbs
+:: Create script to get admin rights
+fltmc >nul 2>&1 || (title Requesting Administrator Privileges & color CF & echo Requesting Administrator Privileges... & (echo Set uac=CreateObject^("Shell.Application"^):uac.ShellExecute "%~f0","","","runas",1)>%uac% & %uac% & if exist %uac% del /f /q %uac% & popd & exit)
+goto :eof
 
 ::===============================================================================================================::
 

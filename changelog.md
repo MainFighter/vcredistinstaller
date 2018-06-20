@@ -2,7 +2,11 @@
 + Adding the choice to install or not install certain versions
 + Relaunch script after update
 
-# v1.3.2
+# v1.3.3
++ Moved some stuff around (get admin rights, etc)
+- Removed unattendrestart just use autorestart instead
+
+## v1.3.2
 + Added a proper unattended mode
 + Fixed issue with restart not showing up at end
 + Spelling mistake
