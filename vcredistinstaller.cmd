@@ -14,11 +14,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.3.4
+set localversion=1.3.5
 :: Release Date
 set releasedate=21/06/2018
 :: Release Time
-set releasetime=6:33
+set releasetime=8:02
 :: Author's timezone
 set timezone=AEST
 
@@ -267,7 +267,7 @@ call :NewVersionScreen
 :ChooseVersions
 call :Header
 
-if %installrecommended%==true ( set install05=false ) else ( install05=true )
+if %installrecommended%==true ( set install05=false ) else ( set install05=true )
 if %unattend%==true cls & goto DownloadVCRedist
 
 :ask2005

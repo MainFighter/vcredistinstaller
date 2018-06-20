@@ -2,7 +2,10 @@
 + Adding the choice to install or not install certain versions
 + Relaunch script after update
 
-# v1.3.4
+# v1.3.5
++ Fixed unattend installrecommended option
+
+## v1.3.4
 + Shuffled configuration settings
 - Left testmode on
 
