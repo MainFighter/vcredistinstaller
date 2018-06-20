@@ -18,7 +18,7 @@ set localversion=1.3.3
 :: Release Date
 set releasedate=21/06/2018
 :: Release Time
-set releasetime=5:37
+set releasetime=6:26
 :: Author's timezone
 set timezone=AEST
 
@@ -128,7 +128,7 @@ set tpdlvcredist17_64=%vcredisturl%/%vcredist17_64%
 :: Debug mode will show the debug screen
 :: Debug show download will show the download urls on the end screen
 :: Debug install will still download and install vcredist for real, won't work if test mode is enabled
-set testmode=true
+set testmode=false
 set debug=false
 set debugshowdl=true
 set debuginstall=false
