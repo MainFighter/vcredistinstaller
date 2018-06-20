@@ -2,7 +2,11 @@
 + Adding the choice to install or not install certain versions
 + Relaunch script after update
 
-# v1.3.3
+# v1.3.4
++ Shuffled configuration settings
+- Left testmode on
+
+## v1.3.3
 + Moved some stuff around (get admin rights, etc)
 - Removed unattendrestart just use autorestart instead
 

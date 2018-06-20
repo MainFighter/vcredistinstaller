@@ -14,28 +14,36 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.3.3
+set localversion=1.3.4
 :: Release Date
 set releasedate=21/06/2018
 :: Release Time
-set releasetime=6:26
+set releasetime=6:33
 :: Author's timezone
 set timezone=AEST
 
-:: Customize
-:: Changes command prompt window title (doesn't change it on every screen)
-set cmdtitle=%website% - %detailedprojectname% - v%localversion%
-:: Changes primary command prompt colors
-set cmdcolor=0A
-:: Changes color on warning screen, used on new version and debug screen currently
-set cmdwcolor=CF
+::===============================================================================================================::
 
+:: Script Configuration
+
+:: Generic Settings
+:: Bin Directory, this is where bineries that are need are stored (eg wget)
+set bindir=bin
 :: Version Check, if set to false will disable version check
 set versioncheck=true
-
 :: Auto Update, will auto update the script without asking
 set autoupdate=false
 
+:: Remote URLs
+:: You can change the URLs to your own if you like (just make sure you create the right files, you can look at the ones on my server if you are unsure)
+set scripturl=https://%website%/scripts/%projectname%
+set updateurl=%scripturl%/release
+set versionurl=%scripturl%/remote/version.txt
+set vcredisturl=%scripturl%/remote/vcredist
+set archiver64url=%scripturl%/remote/bin/7za_win64.exe
+set archiver32url=%scripturl%/remote/bin/7za_win32.exe
+
+:: VCRedistInstaller Settings
 :: Visual C++ Redistributable Download, if set to false will disable the script from downloadng Visual C++ Redistributable files
 :: If you disable the auto download you will have to manually download and place the files in the correct folder
 :: You can change the name of the folder and files below or just rename the exes to the default folder and exe names
@@ -57,18 +65,6 @@ set keepcache=true
 :: Auto restart, will automatically restart system when installation is complete
 set disablerestart=false
 set autorestart=false
-
-:: Remote URLs
-:: You can change the URLs to your own if you like (just make sure you create the right files, you can look at the ones on my server if you are unsure)
-set scripturl=https://%website%/scripts/%projectname%
-set updateurl=%scripturl%/release
-set versionurl=%scripturl%/remote/version.txt
-set vcredisturl=%scripturl%/remote/vcredist
-set archiver64url=%scripturl%/remote/bin/7za_win64.exe
-set archiver32url=%scripturl%/remote/bin/7za_win32.exe
-
-:: Bin Directory, this is where bineries that are need are stored (eg wget)
-set bindir=bin
 
 :: vcredistdir is the name of the folder the files are store in on the local machine
 set vcredistdir=vcredist
@@ -123,7 +119,21 @@ set tpdlvcredist15_64=%vcredisturl%/%vcredist15_64%
 set tpdlvcredist17_32=%vcredisturl%/%vcredist17_32%
 set tpdlvcredist17_64=%vcredisturl%/%vcredist17_64%
 
+::===============================================================================================================::
+
+:: Script Customization
+
+:: Changes command prompt window title (doesn't change it on every screen)
+set cmdtitle=%website% - %detailedprojectname% - v%localversion%
+:: Changes primary command prompt colors
+set cmdcolor=0A
+:: Changes color on warning screen, used on new version and debug screen currently
+set cmdwcolor=CF
+
+::===============================================================================================================::
+
 :: Debug and test mode
+
 :: Test mode will simulate installs and some other stuff instead of actually running the script
 :: Debug mode will show the debug screen
 :: Debug show download will show the download urls on the end screen
