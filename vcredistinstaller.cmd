@@ -14,11 +14,11 @@ set projectname=vcredistinstaller
 :: Full Project Name
 set detailedprojectname=Download and Installer for VC++ Redistributables
 :: Current version
-set localversion=1.4.0-test1
+set localversion=1.4.0
 :: Release Date
-set releasedate=11/12/2019
+set releasedate=12/12/2019
 :: Release Time
-set releasetime=XX:XX
+set releasetime=00:54
 :: Author's timezone
 set timezone=AEST
 
