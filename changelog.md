@@ -2,7 +2,11 @@
 + Adding the choice to install or not install certain versions
 + Relaunch script after update
 
-# v1.3.5
+# v1.4.0-test1
++ First attempts at 2015-2019 support
++ 2008 end of life
+
+## v1.3.5
 + Fixed unattend installrecommended option
 
 ## v1.3.4
