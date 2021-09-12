@@ -1,6 +1,6 @@
 # Obsolete
-## winget now exsists, makes this basically completely obsolete
-Just use winget instead, takes seconds to write a script that will install them all using winget
+## Just use winget instead!
+Takes no effort to write a script that will install all of the Visual C++ Redists using winget.
 https://docs.microsoft.com/en-us/windows/package-manager/winget/
 
 # Visual C++ Redistributable Download and Installer script
