@@ -2,7 +2,7 @@
 ## Just use winget instead!
 Takes no effort to write a script that will install all of the Visual C++ Redists using winget.
 
-# Winget:
+# Winget
 https://docs.microsoft.com/en-us/windows/package-manager/winget/
 
 # Visual C++ Redistributable Download and Installer script
